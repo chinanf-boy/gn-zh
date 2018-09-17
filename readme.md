@@ -28,7 +28,7 @@
 [commit]: https://.googlesource.com/gn/+/77d64a3da6bc7d8b0aab83ff7459b3280e6a84f2
 <!-- doc-templite END generated -->
 
-- [ ] [readme](./readme.md)
+- [x] [readme](./readme.md)
 - [ ] [docs](./docs) 0/8
 
 ### 贡献
@@ -49,11 +49,11 @@
 
 # GN
 
-GN是一个元构建系统,可以为[ninja](https://ninja-build.org)生成构建文件.有文件[文档/](./docs).
+GN是一个元构建系统,可以为[ninja](https://ninja-build.org)生成构建文件.查看[文档/](./docs/quick_start.zh.md)了解更多.
 
 ## 入门
 
-```
+```bash
 git clone https://gn.googlesource.com/gn
 cd gn
 python build/gen.py
@@ -62,18 +62,18 @@ ninja -C out
 out/gn_unittests
 ```
 
-在Windows上,它是预期的`cl.exe`,`link.exe`,和`lib.exe`可以找到`PATH`,因此您需要从Visual Studio命令提示符或类似命令运行.
+在Windows上,它预想三个`cl.exe`,`link.exe`,和`lib.exe`可以在`PATH`找到,因此您需要在Visual Studio命令提示符或类似命令运行运行.
 
-在Linux和Mac上,默认编译器是`clang++`,最近的版本预计将在`PATH`.这可以通过设置覆盖`CC`,`CXX`,和`AR`.
+在Linux和Mac上,默认编译器是`clang++`,最近的版本预想编译器在`PATH`可以找到.这可以覆盖通过设置`CC`,`CXX`,和`AR`.
 
 ## 发送补丁
 
-GN使用[格里特](https://www.gerritcodereview.com/)用于代码审查.如何修补的简短版本是:
+GN使用[Gerrit](https://www.gerritcodereview.com/)用于代码审查.如何修补的简短版本是:
 
 ```
-Register at https://gn-review.googlesource.com.
+注册 在 https://gn-review.googlesource.com.
 
-... edit code ...
+... 编辑代码后 ...
 ninja -C out && out/gn_unittests
 ```
 
@@ -97,4 +97,4 @@ git cl upload --gerrit
 
 ## 社区
 
-您可以提出问题,并跟随GN的开发在Chromium上进行[GN-dev的@](https://groups.google.com/a/chromium.org/forum/#!forum/gn-dev)谷歌集团.
+您可以提出问题,并跟随GN的开发,在Chromium上的[gn-dev@](https://groups.google.com/a/chromium.org/forum/#!forum/gn-dev)谷歌群.
