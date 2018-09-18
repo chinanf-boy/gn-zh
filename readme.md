@@ -29,9 +29,11 @@
 <!-- doc-templite END generated -->
 
 - [x] [readme](./readme.md)
-- [ ] [docs](./docs) 1/8
+- [ ] [docs](./docs) 4/8
     - [./docs/quick_start.zh.md](./docs/quick_start.zh.md) 快速入门
     - [./docs/cross_compiles.zh.md](./docs/cross_compiles.zh.md) 跨平台编译
+    - [./docs/standalone.zh.md](./docs/standalone.zh.md) GN的简单独立构建
+    - [./docs/update_binaries.zh.md](./docs/update_binaries.zh.md) 更新Chromium使用的GN二进制文件.
 
 
 ### 贡献
