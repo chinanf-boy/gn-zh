@@ -29,7 +29,8 @@
 <!-- doc-templite END generated -->
 
 - [x] [readme](./readme.md)
-- [ ] [docs](./docs) 0/8
+- [ ] [docs](./docs) 1/8
+    - [./docs/quick_start.zh.md](./docs/quick_start.zh.md)
 
 ### 贡献
 

@@ -1,7 +1,9 @@
 
 # GN语言与操作
 
-[TOC]
+<!-- [TOC] -->
+<!-- START doctoc --> 
+<!-- END doctoc -->
 
 ## 介绍
 
