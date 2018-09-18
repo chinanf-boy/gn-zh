@@ -10,7 +10,7 @@
 - [运行GN](#%E8%BF%90%E8%A1%8Cgn)
 - [构建一个build](#%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AAbuild)
 - [传递构建参数](#%E4%BC%A0%E9%80%92%E6%9E%84%E5%BB%BA%E5%8F%82%E6%95%B0)
-- [交叉编译到目标操作系统或体系结构](#%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%88%B0%E7%9B%AE%E6%A0%87%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%88%96%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84)
+- [跨平台编译到目标操作系统或体系结构](#%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%BC%96%E8%AF%91%E5%88%B0%E7%9B%AE%E6%A0%87%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%88%96%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84)
 - [配置goma](#%E9%85%8D%E7%BD%AEgoma)
 - [配置组件模式](#%E9%85%8D%E7%BD%AE%E7%BB%84%E4%BB%B6%E6%A8%A1%E5%BC%8F)
 - [一步步](#%E4%B8%80%E6%AD%A5%E6%AD%A5)
@@ -68,9 +68,9 @@ gn args --list out/my_build
 
 Chrome开发人员还可以阅读[Chrome特定的的构建配置](http://www.chromium.org/developers/gn-build-configuration)说明以获取更多信息.
 
-## 交叉编译到目标操作系统或体系结构
+## 跨平台编译到目标操作系统或体系结构
 
-运行`gn args out/Default`根据需要替换您的构建目录），并为常见的交叉编译选项添加以下一行或多行. 
+运行`gn args out/Default`根据需要替换您的构建目录），并为常见的跨平台编译选项添加以下一行或多行. 
 
 ```
 target_os = "chromeos"

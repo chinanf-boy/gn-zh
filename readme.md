@@ -30,7 +30,9 @@
 
 - [x] [readme](./readme.md)
 - [ ] [docs](./docs) 1/8
-    - [./docs/quick_start.zh.md](./docs/quick_start.zh.md)
+    - [./docs/quick_start.zh.md](./docs/quick_start.zh.md) 快速入门
+    - [./docs/cross_compiles.zh.md](./docs/cross_compiles.zh.md) 跨平台编译
+
 
 ### 贡献
 
@@ -44,8 +46,16 @@
 
 ### 目录
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [GN](#gn)
+  - [入门](#%E5%85%A5%E9%97%A8)
+  - [发送补丁](#%E5%8F%91%E9%80%81%E8%A1%A5%E4%B8%81)
+  - [社区](#%E7%A4%BE%E5%8C%BA)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 # GN
