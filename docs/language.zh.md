@@ -10,13 +10,13 @@
 
 ### 使用内置帮助!
 
-GN 有一个广泛的内置帮助系统,它为每个函数和内置变量提供了参考.这个页面更高级.
+GN 有一个广泛的内置帮助系统,它为每个函数和内置变量提供了参考. 这个页面更高级.
 
 ```
 gn help
 ```
 
-你也可以看到[幻灯片](https://docs.google.com/presentation/d/15Zwb53JcncHfEwHpnG_PoIbbzQ3GQi_cpujYwbpcbZo/edit?usp=sharing)从 2016 年 3 月的 GN 介绍.讲演者笔记包含完整内容.
+你也可以看到[幻灯片](https://docs.google.com/presentation/d/15Zwb53JcncHfEwHpnG_PoIbbzQ3GQi_cpujYwbpcbZo/edit?usp=sharing)从 2016 年 3 月的 GN 介绍.讲演者笔记完整内容.
 
 ### 设计哲学
 

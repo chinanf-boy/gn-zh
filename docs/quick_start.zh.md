@@ -29,6 +29,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+> https://blog.csdn.net/Vincent95/article/details/78499883 的翻译 nice
+
 ## 运行GN
 
 你可以在命令行里直接输入`gn`运行. 因为在`depot_tools`（路径应该在你的环境变量PATH中已经设置过）工具目录中有一个相同名字的脚本. 这个脚本会找到当前目录中的二进制文件并运行它. 
@@ -116,7 +118,7 @@ executable("hello_world") {
 }
 ```
 
-该目录中应该已经有一个`hello_world.cc`文件，包含你所期望的. 就是这样！现在我们只需要告诉构建这个文件. 打开BUILD.gn根目录中的文件，并将此目标的标签添加到其中一个根组的依赖关系（"组"目标是一个元目标，它只是其他目标的集合）:
+在目标目录中应该存在一个`hello_world.cc`的文件，包含你期望的内容。现在我们仅仅需要告诉编译器需要处理这个编译文件就行了。打开根目录(`src`)下的`BUILD.gn`文件，将新创建的编译文件添加到其中一个根group的依赖项中（这里的每个group是其它目标的一个集合）：
 
 ```
 group("root") {
@@ -140,7 +142,7 @@ ninja -C out/Default hello_world
 out/Default/hello_world
 ```
 
-GN鼓励目标名称不是全球唯一的静态库. 要构建其中之一，您可以将不带前导"//"的标签传递给Ninja:
+GN 鼓励对静态库使用相同的名字。编译其中的某个时，你可以将不带前缀`//`的标签文本传给 ninja:
 
 ```
 ninja -C out/Default tools/gn/tutorial:hello_world
