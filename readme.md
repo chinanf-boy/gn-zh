@@ -10,7 +10,7 @@
 
 ---
 
-## 校对 🀄️
+## 校对 ✅
 
 <!-- doc-templite START generated -->
 <!-- docTempliteId = 'google' -->
@@ -29,7 +29,7 @@
 <!-- doc-templite END generated -->
 
 - [x] [readme](./readme.md)
-- [ ] [docs](./docs) 4/8
+- [ ] [docs](./docs) 7/8
     - [./docs/faq.zh.md](./docs/faq.zh.md) 常见问题
     - [./docs/quick_start.zh.md](./docs/quick_start.zh.md) 快速入门
     - [./docs/cross_compiles.zh.md](./docs/cross_compiles.zh.md) 跨平台编译
