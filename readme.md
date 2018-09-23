@@ -36,7 +36,7 @@
     - [./docs/standalone.zh.md](./docs/standalone.zh.md) GN的简单独立构建
     - [./docs/update_binaries.zh.md](./docs/update_binaries.zh.md) 更新Chromium使用的GN二进制文件.
     - [./docs/languages.zh.md](./docs/languages.zh.md) gn语法设计
-    - [ ] [./docs/style_guide.zh.md](./docs/style_guide.zh.md) gn 风格指南
+    - [./docs/style_guide.zh.md](./docs/style_guide.zh.md) gn 风格指南
     - [ ] [./docs/reference.zh.md](./docs/reference.zh.md) 😢 放弃 参考文件的翻译
 
 
