@@ -1,16 +1,157 @@
 
-# GN参考
+# GN Reference
 
-*此页面是自动生成的* `gn help --markdown all`.
+*这个页面是自动生成的* `gn help --markdown all`.
 
-## 内容
+## Contents
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+-   [命令](#commands)
+    -   [`analyze:`分析哪些目标受文件列表的影响.](#analyze)
+    -   [`args:`显示或配置生成声明的参数.](#args)
+    -   [`check:`检查头依赖项.](#check)
+    -   [`clean:`清除输出目录.](#clean)
+    -   [`desc:`显示关于目标或配置的许多有洞察力的信息.](#desc)
+    -   [`format:`格式化.gn文件.](#format)
+    -   [`gen:`生成忍者文件.](#gen)
+    -   [`help:`照你的想法去做.](#help)
+    -   [`ls:`列出匹配目标.](#ls)
+    -   [`path:`找到两个目标之间的路径.](#path)
+    -   [`refs:`查找引用目标或文件的内容.](#refs)
+-   [目标声明](#targets)
+    -   [`action:`声明一次运行脚本的目标.](#action)
+    -   [`action_foreach:`声明一个在一组文件上运行脚本的目标.](#action_foreach)
+    -   [`bundle_data:`\[iOS/MACOS\]声明没有输出的目标.](#bundle_data)
+    -   [`copy:`声明复制文件的目标.](#copy)
+    -   [`create_bundle:`\[iOS/MACOS\]构建IOS或MACOS包.](#create_bundle)
+    -   [`executable:`声明一个可执行的目标.](#executable)
+    -   [`group:`声明一个命名的目标组.](#group)
+    -   [`loadable_module:`声明一个可加载模块目标.](#loadable_module)
+    -   [`shared_library:`声明共享库目标.](#shared_library)
+    -   [`source_set:`声明源集目标.](#source_set)
+    -   [`static_library:`声明静态库目标.](#static_library)
+    -   [`target:`用给定的编程类型声明目标.](#target)
+-   [构建文件函数](#functions)
+    -   [`assert:`断言表达式在生成时是正确的.](#assert)
+    -   [`config:`定义配置对象.](#config)
+    -   [`declare_args:`声明生成参数.](#declare_args)
+    -   [`defined:`返回是否定义了标识符.](#defined)
+    -   [`exec_script:`同步运行脚本并返回输出.](#exec_script)
+    -   [`foreach:`迭代一个列表.](#foreach)
+    -   [`forward_variables_from:`复制来自不同范围的变量.](#forward_variables_from)
+    -   [`get_label_info:`从目标的标签中获取属性.](#get_label_info)
+    -   [`get_path_info:`提取文件或目录名的部分.](#get_path_info)
+    -   [`get_target_outputs:`\[文件列表\]获取来自目标的输出列表.](#get_target_outputs)
+    -   [`getenv:`获取环境变量.](#getenv)
+    -   [`import:`将文件导入当前范围.](#import)
+    -   [`not_needed:`马克变量从范围不需要.](#not_needed)
+    -   [`pool:`定义池对象.](#pool)
+    -   [`print:`打印到控制台.](#print)
+    -   [`process_file_template:`在文件列表上进行模板展开.](#process_file_template)
+    -   [`read_file:`将文件读入变量.](#read_file)
+    -   [`rebase_path:`将文件或目录重新定位到另一个位置.](#rebase_path)
+    -   [`set_default_toolchain:`设置默认的工具链名称.](#set_default_toolchain)
+    -   [`set_defaults:`设置目标类型的默认值.](#set_defaults)
+    -   [`set_sources_assignment_filter:`设置一个模式来过滤源文件.](#set_sources_assignment_filter)
+    -   [`split_list:`将列表分割成n个不同的子列表.](#split_list)
+    -   [`string_replace:`替换给定字符串中的子字符串.](#string_replace)
+    -   [`template:`定义模板规则.](#template)
+    -   [`tool:`指定工具链工具的参数.](#tool)
+    -   [`toolchain:`定义工具链.](#toolchain)
+    -   [`write_file:`将文件写入磁盘.](#write_file)
+-   [内置预定义变量](#predefined_variables)
+    -   [`current_cpu:`\[String \] 当前工具链的处理器体系结构.](#current_cpu)
+    -   [`current_os:`\[String \] 当前工具链的操作系统.](#current_os)
+    -   [`current_toolchain:`\[String \] 当前工具链的标签.](#current_toolchain)
+    -   [`default_toolchain:`\[String \] 默认工具链的标签.](#default_toolchain)
+    -   [`host_cpu:`\[String \]  GN正在运行的处理器体系结构.](#host_cpu)
+    -   [`host_os:`\[String \]  GN正在运行的操作系统.](#host_os)
+    -   [`invoker:`\[string\]模板内的调用范围.](#invoker)
+    -   [`python_path:`\[string\] Python的绝对路径.](#python_path)
+    -   [`root_build_dir:`\[String \] 运行生成命令的目录.](#root_build_dir)
+    -   [`root_gen_dir:`\[String \] 工具链生成文件的目录.](#root_gen_dir)
+    -   [`root_out_dir:`\[string\]工具链输出文件的根目录.](#root_out_dir)
+    -   [`target_cpu:`\[String \] 构建所需的CPU架构.](#target_cpu)
+    -   [`target_gen_dir:`\[string\]目标生成文件的目录.](#target_gen_dir)
+    -   [`target_name:`\[String \] 当前目标的名称.](#target_name)
+    -   [`target_os:`\[String \] 构建所需的操作系统.](#target_os)
+    -   [`target_out_dir:`\[string\]目标输出文件的目录.](#target_out_dir)
+-   [在目标中设置的变量](#target_variables)
+    -   [`all_dependent_configs:`\[label list\]配置为强迫依赖者.](#all_dependent_configs)
+    -   [`allow_circular_includes_from:`\[label list\]许可证包括DEPS.](#allow_circular_includes_from)
+    -   [`arflags:`\[string list\]传递给STATICH图书馆归档文件的参数.](#arflags)
+    -   [`args:`\[string list\]传递给操作的参数.](#args)
+    -   [`asmflags:`\[string list\]传递给汇编程序的标志.](#asmflags)
+    -   [AsjtTyNo.DEPs:\[\[label 模式 list\] \] 确保这些目标不存在DEP.](#assert_no_deps)
+    -   [`bundle_contents_dir:`在{CeaType束中{{BeulLyCordssDIr}}的展开.](#bundle_contents_dir)
+    -   [`bundle_deps_filter:`\[label list\]被过滤掉的标签列表.](#bundle_deps_filter)
+    -   [`bundle_executable_dir:`C{Type包中{{BeulLyExcutuBeLe}DR}}的展开](#bundle_executable_dir)
+    -   [`bundle_plugins_dir:`在{CeaType束中{{BaulLyPuxSnIs}DR}}的展开.](#bundle_plugins_dir)
+    -   [`bundle_resources_dir:`在{CeaType束中{{BekLyRealsCysDIr}}的展开.](#bundle_resources_dir)
+    -   [`bundle_root_dir:`在{CeaType束中{{BeuleLoRoTo.dir}}的展开.](#bundle_root_dir)
+    -   [`cflags:`\[string list\]传递给所有C编译器变量的标志.](#cflags)
+    -   [`cflags_c:`\[string list\]传递给C编译器的标志.](#cflags_c)
+    -   [`cflags_cc:`\[string list\]传递给C++编译器的标志.](#cflags_cc)
+    -   [`cflags_objc:`\[string list\]传递给目标C编译器的标志.](#cflags_objc)
+    -   [`cflags_objcc:`\[string list\]传递给目标C++编译器的标志.](#cflags_objcc)
+    -   [`check_includes:`\[boolean\]控制是否检查目标文件.](#check_includes)
+    -   [`code_signing_args:`\[string list\]传递给代码签名脚本的参数.](#code_signing_args)
+    -   [`code_signing_outputs:`\[文件列表\]用于代码签名步骤的输出文件.](#code_signing_outputs)
+    -   [`code_signing_script:`\[文件名\]用于代码签名的脚本.](#code_signing_script)
+    -   [`code_signing_sources:`\[文件列表\]用于代码签名步骤的源代码.](#code_signing_sources)
+    -   [`complete_static_lib:`\[BooLe\]将所有DEPS链接到静态库中.](#complete_static_lib)
+    -   [`configs:`\[label list\]应用于此目标或配置的配置.](#configs)
+    -   [`data:`\[文件列表\]运行时数据文件依赖项.](#data)
+    -   [`data_deps:`\[label list\]非链接依赖项.](#data_deps)
+    -   [`defines:`\[string list\] C预处理器定义.](#defines)
+    -   [`depfile:`\[string\]用于操作的输入依赖项的文件名.](#depfile)
+    -   [`deps:`\[label list\]私有链接依赖项.](#deps)
+    -   [`friend:`\[label 模式 list\]允许目标包括私有页眉.](#friend)
+    -   [`include_dirs:`\[目录列表\]附加目录.](#include_dirs)
+    -   [`inputs:`\[文件列表\]附加编译时间依赖关系.](#inputs)
+    -   [`ldflags:`\[string list\]传递给链接器的标志.](#ldflags)
+    -   [`lib_dirs:`\[目录列表\]附加的库目录.](#lib_dirs)
+    -   [`libs:`\[string list\]链接的附加库.](#libs)
+    -   [`output_dir:`\[目录\]将输出文件放入.](#output_dir)
+    -   [`output_extension:`\[String \] 值用于输出的文件扩展名.](#output_extension)
+    -   [`output_name:`\[String \] 输出文件的名称,而不是默认值.](#output_name)
+    -   [`output_prefix_override:`\[boolean\]不要使用前缀来输出名称.](#output_prefix_override)
+    -   [`outputs:`\[文件列表\]用于操作和复制目标的输出文件.](#outputs)
+    -   [`partial_info_plist:`\[文件名\]来自资产目录编译器的路径PLIST.](#partial_info_plist)
+    -   [`pool:`\[string\]由动作使用的池的标签.](#pool)
+    -   [`precompiled_header:`\[String \] 头文件进行预编译.](#precompiled_header)
+    -   [`precompiled_header_type:`\[string\]"GCC"或"MSVC".](#precompiled_header_type)
+    -   [`precompiled_source:`\[文件名\]源文件预编译.](#precompiled_source)
+    -   [`product_type:`\[String \]  XCODE项目的产品类型.](#product_type)
+    -   [`public:`\[文件列表\]为目标声明公共头文件.](#public)
+    -   [`public_configs:`\[ Label List \]  Conplied applied to Depts .](#public_configs)
+    -   [`public_deps:`\[ Label List \] 宣布公共独立.](#public_deps)
+    -   [`response_file_contents:`\[ string list \]  contents of . RSP file for actions .](#response_file_contents)
+    -   [`script:`\[概况\]](#script)
+    -   [`sources:`\[ file list \]  source files for a target .](#sources)
+    -   [`testonly:`\[波浪\]装饰只用于测试.](#testonly)
+    -   [`visibility:`\[ Label List \]  The List of Labes that can do取决于Target .](#visibility)
+    -   [`write_runtime_deps:`Writes the target ' s runtime force to the given path .](#write_runtime_deps)
+    -   [`xcode_extra_attributes:`\[ Scope \]  Explendtes for Xcode Projects .](#xcode_extra_attributes)
+    -   [`test_application_name:`\[ String \]  Test application name for unit or UI Test Target .](#test_application_name)
+-   [Other help topics](#other)
+    -   [`all:`Pprint All the Help at 11](#all)
+    -   [`buildargs:`How build Argules work .](#buildargs)
+    -   [`dotfile:`你知道吗?](#dotfile)
+    -   [`execution:`4 .《建筑和分析概览》.](#execution)
+    -   [`grammar:`GN建筑纤维的语言和语法.](#grammar)
+    -   [`input_conversion:`处理从EXCE编排脚本和更新的文件.](#input_conversion)
+    -   [`label_pattern:`Matching More than one Label .](#label_pattern)
+    -   [`labels:`About Labes .](#labels)
+    -   [`ninja_rules:`2 . How Ninya Build Rules are Named .](#ninja_rules)
+    -   [`nogncheck:`Annotto Inincludes for Checking .](#nogncheck)
+    -   [`output_conversion:`特别报告员的报告(E / CN.4 / Sub.2 / AC.4 / 2000 / 2).](#output_conversion)
+    -   [`runtime_deps:`How runtime依赖电脑化工作.](#runtime_deps)
+    -   [`source_expansion:`Map Sources to Outputs for Sripts](#source_expansion)
+    -   [`switches:`Sshow available command - line switchs .](#switches)
 
-## <a name="commands"></a>命令
+## <a name="commands"></a>Commands
 
-### <a name="analyze"></a>**分析\<out_dir> \<input_path> \<output_path>**
+### <a name="analyze"></a>**gn analyze \<out_dir> \<input_path> \<output_path>**
 
 ```
   Analyze which targets are affected by a list of files.
@@ -88,7 +229,7 @@
   build arguments work.
 ```
 
-#### **用法**
+#### **Usage**
 
 ```
   gn args <out_dir>
@@ -143,7 +284,7 @@
       ]
 ```
 
-#### **例子**
+#### **Examples**
 
 ```
   gn args out/Debug
@@ -167,7 +308,7 @@
     arguments).
 ```
 
-### <a name="check"></a>**检查\<out_dir> [\<label_pattern>][\--force]**
+### <a name="check"></a>**gn check \<out_dir> [\<label_pattern>][\--force]**
 
 ```
   GN's include header checker validates that the includes for C-like source
@@ -182,7 +323,7 @@
   matching targets will be checked. See "gn help label_pattern" for details.
 ```
 
-#### **特定于命令的开关**
+#### **Command-specific switches**
 
 ```
   --force
@@ -190,7 +331,7 @@
       target's files that match the target label.
 ```
 
-#### **什么得到检查**
+#### **What gets checked**
 
 ```
   The .gn file may specify a list of targets to be checked. Only these targets
@@ -243,7 +384,7 @@
       allow_circular_includes_from".
 ```
 
-#### **有关解决问题的建议**
+#### **Advice on fixing problems**
 
 ```
   If you have a third party project that is difficult to fix or doesn't care
@@ -270,7 +411,7 @@
   could be considered conceptually a member of both.
 ```
 
-#### **例子**
+#### **Examples**
 
 ```
   gn check out/Debug
@@ -283,16 +424,16 @@
       Check only the files in targets in the //foo directory tree.
 ```
 
-### <a name="clean"></a>**干净\<out_dir>**
+### <a name="clean"></a>**gn clean \<out_dir>**
 
 ```
   Deletes the contents of the output directory except for args.gn and
   creates a Ninja build environment sufficient to regenerate the build.
 ```
 
-### <a name="desc"></a>**gn desc \<out_dir> \<标签或图案> [\<要展示什么>][\--blame]"**
+### <a name="desc"></a>**gn desc \<out_dir> \<label or pattern> [\<what to show>][\--blame] "**
 
-#### **[\--format = JSON]**
+#### **[\--format=json]**
 
 ```
   Displays information about a given target or config. The build parameters
@@ -303,7 +444,7 @@
   targets.
 ```
 
-#### **可能性\<要展示什么>**
+#### **Possibilities for \<what to show>**
 
 ```
   (If unspecified an overall summary will be displayed.)
@@ -343,7 +484,7 @@
       "--blame" to see the source of the dependency.
 ```
 
-#### **共享标志**
+#### **Shared flags**
 
 ```
   --all-toolchains
@@ -359,7 +500,7 @@
       Format the output as JSON instead of text.
 ```
 
-#### **目标标志**
+#### **Target flags**
 
 ```
   --blame
@@ -379,7 +520,7 @@
   Configs can have child configs. Specifying --tree will show the hierarchy.
 ```
 
-#### **打印输出**
+#### **Printing outputs**
 
 ```
   The "outputs" section will list all outputs that apply, including the outputs
@@ -387,7 +528,7 @@
   targets).
 ```
 
-#### **印刷品**
+#### **Printing deps**
 
 ```
   Deps will include all public, private, and data deps (TODO this could be
@@ -428,7 +569,7 @@
       unspecified, no filtering will be performed.
 ```
 
-#### **注意**
+#### **Note**
 
 ```
   This command will show the full name of directories and source files, but
@@ -437,7 +578,7 @@
   displayed by this command won't match (but should mean the same thing).
 ```
 
-#### **例子**
+#### **Examples**
 
 ```
   gn desc out/Debug //base:base
@@ -452,7 +593,7 @@
       each one was set from.
 ```
 
-### <a name="format"></a>**gn格式[\--dump树-]\(--stdin | \<build_file>)**
+### <a name="format"></a>**gn format [\--dump-tree] \(--stdin | \<build_file>)**
 
 ```
   Formats .gn file to a standard format.
@@ -468,7 +609,7 @@
   ]
 ```
 
-#### **参数**
+#### **Arguments**
 
 ```
   --dry-run
@@ -488,7 +629,7 @@
       in-place.
 ```
 
-#### **例子**
+#### **Examples**
 
 ```
   gn format //some/BUILD.gn
@@ -514,7 +655,7 @@
   See "gn help switches" for the common command-line switches.
 ```
 
-#### **IDE选项**
+#### **IDE options**
 
 ```
   GN optionally generates files for IDE. Possibilities for <ide options>
@@ -538,7 +679,7 @@
       Visual Studio, Xcode and JSON.
 ```
 
-#### **Visual Studio标志**
+#### **Visual Studio Flags**
 
 ```
   --sln=<file_name>
@@ -559,7 +700,7 @@
       command-line. Can be used to configure ninja flags, like "-j".
 ```
 
-#### **Xcode标志**
+#### **Xcode Flags**
 
 ```
   --workspace=<file_name>
@@ -575,7 +716,7 @@
       "All" invokes ninja without any target and builds everything.
 ```
 
-#### **QtCreator标志**
+#### **QtCreator Flags**
 
 ```
   --root-target=<target_name>
@@ -584,7 +725,7 @@
       graph will be emitted.
 ```
 
-#### **Eclipse IDE支持**
+#### **Eclipse IDE Support**
 
 ```
   GN DOES NOT generate Eclipse CDT projects. Instead, it generates a settings
@@ -596,7 +737,7 @@
   indexer issues here and there.
 ```
 
-#### **通用JSON输出**
+#### **Generic JSON Output**
 
 ```
   Dumps target information to a JSON file and optionally invokes a
@@ -617,7 +758,7 @@
       Optional second argument that will passed to executed script.
 ```
 
-#### **编译数据库**
+#### **Compilation Database**
 
 ```
   --export-compile-commands
@@ -628,7 +769,7 @@
       compilations independent of the build system.
 ```
 
-### <a name="help"></a>**帮助\<什么>**
+### <a name="help"></a>**gn help \<anything>**
 
 ```
   Yo dawg, I heard you like help on your help so I put help on the help in the
@@ -637,21 +778,21 @@
   You can also use "all" as the parameter to get all help at once.
 ```
 
-#### **开关**
+#### **Switches**
 
 ```
   --markdown
       Format output in markdown syntax.
 ```
 
-#### **例**
+#### **Example**
 
 ```
   gn help --markdown all
       Dump all help to stdout in markdown format.
 ```
 
-### <a name="ls"></a>**gn ls \<out_dir> [\<label_pattern>][\--all-toolchains] [\--as =... ]**
+### <a name="ls"></a>**gn ls \<out_dir> [\<label_pattern>][\--all-toolchains] [\--as=...]**
 
 ```
       [--type=...] [--testonly=...]
@@ -665,7 +806,7 @@
   more complex expressions, pipe the result through grep.
 ```
 
-#### **选项**
+#### **Options**
 
 ```
   --as=(buildfile|label|output)
@@ -700,7 +841,7 @@
       unspecified, no filtering will be performed.
 ```
 
-#### **例子**
+#### **Examples**
 
 ```
   gn ls out/Debug
@@ -726,7 +867,7 @@
       in multiple toolchains).
 ```
 
-### <a name="path"></a>**gn路径\<out_dir> \<target_one> \<target_two>**
+### <a name="path"></a>**gn path \<out_dir> \<target_one> \<target_two>**
 
 ```
   Finds paths of dependencies between two targets. Each unique path will be
@@ -741,7 +882,7 @@
   multiple shortest paths, an arbitrary one will be selected.
 ```
 
-#### **有趣的路径**
+#### **Interesting paths**
 
 ```
   In a large project, there can be 100's of millions of unique paths between a
@@ -750,7 +891,7 @@
   previously known to lead to the target.
 ```
 
-#### **选项**
+#### **Options**
 
 ```
   --all
@@ -766,13 +907,13 @@
      linked deps will be followed. Can't be used with --public.
 ```
 
-#### **例**
+#### **Example**
 
 ```
   gn path out/Default //base //tools/gn
 ```
 
-### <a name="refs"></a>**gn refs \<out_dir>(\<label_pattern>\|\<标签>\|\<文件>| @\<response_file>)\***
+### <a name="refs"></a>**gn refs \<out_dir> (\<label_pattern>\|\<label>\|\<file>|@\<response_file>)\***
 
 ```
         [--all] [--all-toolchains] [--as=...] [--testonly=...] [--type=...]
@@ -800,7 +941,7 @@
      command line limits.
 ```
 
-#### **选项**
+#### **Options**
 
 ```
   --all
@@ -853,7 +994,7 @@
       unspecified, no filtering will be performed.
 ```
 
-#### **示例(目标输入)**
+#### **Examples (target input)**
 
 ```
   gn refs out/Debug //tools/gn:gn
@@ -877,7 +1018,7 @@
       Print a reverse dependency tree of //base:base
 ```
 
-#### **示例(文件输入)**
+#### **Examples (file input)**
 
 ```
   gn refs out/Debug //base/macros.h
@@ -897,9 +1038,9 @@
       potentially affected by a change to the given file.
 ```
 
-## <a name="targets"></a>目标声明
+## <a name="targets"></a>Target declarations
 
-### <a name="action"></a>**行动**:声明一次运行脚本的目标.
+### <a name="action"></a>**action**: Declare a target that runs a script a single time.
 
 ```
   This target type allows you to run a script a single time to produce one or
@@ -907,7 +1048,7 @@
   input files, see "gn help action_foreach".
 ```
 
-#### **输入**
+#### **Inputs**
 
 ```
   In an action the "sources" and "inputs" are treated the same: they're both
@@ -937,7 +1078,7 @@
   for runtime-only dependencies.
 ```
 
-#### **输出**
+#### **Outputs**
 
 ```
   You should specify files created by your script by specifying them in the
@@ -951,7 +1092,7 @@
   current build file and converted as needed automatically).
 ```
 
-#### **文件名处理**
+#### **File name handling**
 
 ```
   All output files must be inside the output directory of the build.
@@ -960,7 +1101,7 @@
   respectively.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   args, data, data_deps, depfile, deps, inputs, outputs*, pool,
@@ -968,7 +1109,7 @@
   * = required
 ```
 
-#### **例**
+#### **Example**
 
 ```
   action("run_this_guy_once") {
@@ -986,7 +1127,7 @@
   }
 ```
 
-### <a name="action_foreach"></a>**action_foreach**:声明在一组文件上运行脚本的目标.
+### <a name="action_foreach"></a>**action_foreach**: Declare a target that runs a script over a set of files.
 
 ```
   This target type allows you to run a script once-per-file over a set of
@@ -994,7 +1135,7 @@
   "gn help action".
 ```
 
-#### **输入**
+#### **Inputs**
 
 ```
   The script will be run once per file in the "sources" variable. The "outputs"
@@ -1022,7 +1163,7 @@
   for runtime-only dependencies.
 ```
 
-#### **输出**
+#### **Outputs**
 
 ```
   The script will be executed with the given arguments with the current
@@ -1033,7 +1174,7 @@
   current build file and converted as needed automatically).
 ```
 
-#### **文件名处理**
+#### **File name handling**
 
 ```
   All output files must be inside the output directory of the build.
@@ -1042,7 +1183,7 @@
   respectively.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   args, data, data_deps, depfile, deps, inputs, outputs*, pool,
@@ -1050,7 +1191,7 @@
   * = required
 ```
 
-#### **例**
+#### **Example**
 
 ```
   # Runs the script over each IDL file. The IDL script will generate both a .cc
@@ -1078,7 +1219,7 @@
   }
 ```
 
-### <a name="bundle_data"></a>**bundle_data**:[的iOS / Mac系统]声明没有输出的目标.
+### <a name="bundle_data"></a>**bundle_data**: [iOS/macOS] Declare a target without output.
 
 ```
   This target type allows to declare data that is required at runtime. It is
@@ -1096,14 +1237,14 @@
   See "gn help create_bundle" for more information.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   sources*, outputs*, deps, data_deps, public_deps, visibility
   * = required
 ```
 
-#### **例子**
+#### **Examples**
 
 ```
   bundle_data("icudata") {
@@ -1133,9 +1274,9 @@
   }
 ```
 
-### <a name="copy"></a>**复制**:声明复制文件的目标.
+### <a name="copy"></a>**copy**: Declare a target that copies files.
 
-#### **文件名处理**
+#### **File name handling**
 
 ```
   All output files must be inside the output directory of the build. You would
@@ -1152,7 +1293,7 @@
   "{{source_name_part}}", for example.
 ```
 
-#### **例子**
+#### **Examples**
 
 ```
   # Write a rule that copies a checked-in DLL to the output directory.
@@ -1171,7 +1312,7 @@
   }
 ```
 
-### <a name="create_bundle"></a>**create_bundle**:[IOS / MACOS]构建iOS或macOS包.
+### <a name="create_bundle"></a>**create_bundle**: [ios/macOS] Build an iOS or macOS bundle.
 
 ```
   This target generates an iOS or macOS bundle (which is a directory with a
@@ -1193,7 +1334,7 @@
   data_deps, however.
 ```
 
-#### **代码签名**
+#### **Code signing**
 
 ```
   Some bundle needs to be code signed as part of the build (on iOS all
@@ -1211,7 +1352,7 @@
   code_signing_sources.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   bundle_root_dir*, bundle_contents_dir*, bundle_resources_dir*,
@@ -1222,7 +1363,7 @@
   * = required
 ```
 
-#### **例**
+#### **Example**
 
 ```
   # Defines a template to create an application. On most platform, this is just
@@ -1324,9 +1465,9 @@
   }
 ```
 
-### <a name="executable"></a>**可执行**:声明可执行目标.
+### <a name="executable"></a>**executable**: Declare an executable target.
 
-#### **变量**
+#### **Variables**
 
 ```
   Flags: cflags, cflags_c, cflags_cc, cflags_objc, cflags_objcc,
@@ -1338,7 +1479,7 @@
            output_extension, public, sources, testonly, visibility
 ```
 
-### <a name="group"></a>**组**:声明一组命名的目标.
+### <a name="group"></a>**group**: Declare a named group of targets.
 
 ```
   This target type allows you to create meta-targets that just collect a set of
@@ -1346,14 +1487,14 @@
   that apply to their dependents.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   Deps: data_deps, deps, public_deps
   Dependent configs: all_dependent_configs, public_configs
 ```
 
-#### **例**
+#### **Example**
 
 ```
   group("all") {
@@ -1364,7 +1505,7 @@
   }
 ```
 
-### <a name="loadable_module"></a>**loadable_module**:声明可加载的模块目标.
+### <a name="loadable_module"></a>**loadable_module**: Declare a loadable module target.
 
 ```
   This target type allows you to create an object file that is (and can only
@@ -1376,7 +1517,7 @@
   "shared_library" target type instead.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   Flags: cflags, cflags_c, cflags_cc, cflags_objc, cflags_objcc,
@@ -1388,7 +1529,7 @@
            output_extension, public, sources, testonly, visibility
 ```
 
-### <a name="shared_library"></a>**shared_library**:声明共享库目标.
+### <a name="shared_library"></a>**shared_library**: Declare a shared library target.
 
 ```
   A shared library will be specified on the linker line for targets listing the
@@ -1398,7 +1539,7 @@
   instead.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   Flags: cflags, cflags_c, cflags_cc, cflags_objc, cflags_objcc,
@@ -1410,7 +1551,7 @@
            output_extension, public, sources, testonly, visibility
 ```
 
-### <a name="source_set"></a>**源程序集**声明源集目标.
+### <a name="source_set"></a>**source_set**: Declare a source set target.
 
 ```
   A source set is a collection of sources that get compiled, but are not linked
@@ -1435,7 +1576,7 @@
   when linking multiple static libraries into a shared library.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   Flags: cflags, cflags_c, cflags_cc, cflags_objc, cflags_objcc,
@@ -1447,7 +1588,7 @@
            output_extension, public, sources, testonly, visibility
 ```
 
-### <a name="static_library"></a>**静态库**声明静态库目标.
+### <a name="static_library"></a>**static_library**: Declare a static library target.
 
 ```
   Make a ".a" / ".lib" file.
@@ -1457,7 +1598,7 @@
   slow) step of creating the intermediate library file.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   complete_static_lib
@@ -1470,7 +1611,7 @@
            output_extension, public, sources, testonly, visibility
 ```
 
-### <a name="target"></a>**目标**用给定的编程类型声明目标.
+### <a name="target"></a>**target**: Declare an target with the given programmatic type.
 
 ```
   target(target_type_string, target_name_string) { ... }
@@ -1489,7 +1630,7 @@
     source_set("doom_melon") {
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   if (foo_build_as_shared) {
@@ -1503,9 +1644,9 @@
   }
 ```
 
-## <a name="functions"></a>构建文件函数
+## <a name="functions"></a>Buildfile functions
 
-### <a name="assert"></a>**断言**断言表达式在生成时是正确的.
+### <a name="assert"></a>**assert**: Assert an expression is true at generation time.
 
 ```
   assert(<condition> [, <error string>])
@@ -1515,14 +1656,14 @@
   with the error message.
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   assert(is_win)
   assert(defined(sources), "Sources must be defined");
 ```
 
-### <a name="config"></a>**配置**:定义配置对象.
+### <a name="config"></a>**config**: Defines a configuration object.
 
 ```
   Configuration objects can be applied to targets and specify sets of compiler
@@ -1543,7 +1684,7 @@
       tree in the order that the targets appear in "deps".
 ```
 
-#### **在配置定义中有效的变量**
+#### **Variables valid in a config definition**
 
 ```
   Flags: cflags, cflags_c, cflags_cc, cflags_objc, cflags_objcc,
@@ -1552,13 +1693,13 @@
   Nested configs: configs
 ```
 
-#### **用于应用配置的目标上的变量**
+#### **Variables on a target used to apply configs**
 
 ```
   all_dependent_configs, configs, public_configs
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   config("myconfig") {
@@ -1571,7 +1712,7 @@
   }
 ```
 
-### <a name="declare_args"></a>**德拉格尔阿格斯**声明生成参数.
+### <a name="declare_args"></a>**declare_args**: Declare build arguments.
 
 ```
   Introduces the given arguments into the current scope. If they are not
@@ -1618,7 +1759,7 @@
         }
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   declare_args() {
@@ -1632,7 +1773,7 @@
   have no effect.
 ```
 
-### <a name="defined"></a>**定义**返回是否定义了标识符.
+### <a name="defined"></a>**defined**: Returns whether an identifier is defined.
 
 ```
   Returns true if the given argument is defined. This is most useful in
@@ -1650,7 +1791,7 @@
   scope.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   template("mytemplate") {
@@ -1667,7 +1808,7 @@
   }
 ```
 
-### <a name="exec_script"></a>**执行脚本**同步运行脚本并返回输出.
+### <a name="exec_script"></a>**exec_script**: Synchronously run a script and return the output.
 
 ```
   exec_script(filename,
@@ -1685,7 +1826,7 @@
   rebase_path").
 ```
 
-#### **争论**:
+#### **Arguments**:
 
 ```
   filename:
@@ -1712,7 +1853,7 @@
       list it.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   all_lines = exec_script(
@@ -1724,7 +1865,7 @@
   exec_script("//foo/bar/myscript.py")
 ```
 
-### <a name="foreach"></a>**前额**重复一个列表.
+### <a name="foreach"></a>**foreach**: Iterate over a list.
 
 ```
     foreach(<loop_var>, <list>) {
@@ -1745,7 +1886,7 @@
   restored.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   mylist = [ "a", "b", "c" ]
@@ -1759,7 +1900,7 @@
   c
 ```
 
-### <a name="forward_variables_from"></a>**转发变量**从不同的范围复制变量.
+### <a name="forward_variables_from"></a>**forward_variables_from**: Copies variables from a different scope.
 
 ```
   forward_variables_from(from_scope, variable_list_or_star,
@@ -1793,7 +1934,7 @@
   variable_list_or_star has a value of "*".
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   # This is a common action template. It would invoke a script with some given
@@ -1835,7 +1976,7 @@
   }
 ```
 
-### <a name="get_label_info"></a>**GETX标签信息**从目标标签中获取属性.
+### <a name="get_label_info"></a>**get_label_info**: Get an attribute from a target's label.
 
 ```
   get_label_info(target_label, what)
@@ -1847,7 +1988,7 @@
   See also "gn help get_target_outputs".
 ```
 
-#### **"什么"参数的可能值**
+#### **Possible values for the "what" parameter**
 
 ```
   "name"
@@ -1890,7 +2031,7 @@
       "current_toolchain" variable when inside that target's declaration.
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   get_label_info(":foo", "name")
@@ -1900,7 +2041,7 @@
   # Returns string "//out/Debug/gen/foo/bar".
 ```
 
-### <a name="get_path_info"></a>**GETH路径信息**:提取文件或目录名的部分.
+### <a name="get_path_info"></a>**get_path_info**: Extract parts of a file or directory name.
 
 ```
   get_path_info(input, what)
@@ -1910,7 +2051,7 @@
   list containing the result of applying the rule to each item in the input.
 ```
 
-#### **"什么"参数的可能值**
+#### **Possible values for the "what" parameter**
 
 ```
   "file"
@@ -1968,7 +2109,7 @@
       system-absolute, see rebase_path().
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   sources = [ "foo.cc", "foo.h" ]
@@ -1982,7 +2123,7 @@
   result = get_path_info(get_path_info(path, "dir"), "abspath"
 ```
 
-### <a name="get_target_outputs"></a>**获得目标输出**:[文件列表]获取目标输出的列表.
+### <a name="get_target_outputs"></a>**get_target_outputs**: [file list] Get the list of outputs from a target.
 
 ```
   get_target_outputs(target_label)
@@ -1999,7 +2140,7 @@
   have no useful output file.
 ```
 
-#### **返回值**
+#### **Return value**
 
 ```
   The names in the resulting list will be absolute file paths (normally like
@@ -2025,7 +2166,7 @@
   probably isn't very useful.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   # Say this action generates a bunch of C source files.
@@ -2040,7 +2181,7 @@
   }
 ```
 
-### <a name="getenv"></a>**盖登夫**获取环境变量.
+### <a name="getenv"></a>**getenv**: Get an environment variable.
 
 ```
   value = getenv(env_var_name)
@@ -2055,13 +2196,13 @@
   language to indicate lookup failure.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   home_dir = getenv("HOME")
 ```
 
-### <a name="import"></a>**进口**:将文件导入当前范围.
+### <a name="import"></a>**import**: Import a file into the current scope.
 
 ```
   The import command loads the rules and variables resulting from executing the
@@ -2088,7 +2229,7 @@
   internal computation without affecting other files.
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   import("//build/rules/idl_compilation_rule.gni")
@@ -2097,7 +2238,7 @@
   import("my_vars.gni")
 ```
 
-### <a name="not_needed"></a>**诺特需要**马克变量从范围不需要.
+### <a name="not_needed"></a>**not_needed**: Mark variables from scope as not needed.
 
 ```
   not_needed(variable_list_or_star, variable_to_ignore_list = [])
@@ -2110,7 +2251,7 @@
   variable_list_or_star is "*".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   not_needed("*", [ "config" ])
@@ -2119,7 +2260,7 @@
   not_needed(invoker, [ "data_deps", "deps" ])
 ```
 
-### <a name="pool"></a>**水塘**定义池对象.
+### <a name="pool"></a>**pool**: Defines a pool object.
 
 ```
   Pool objects can be applied to a tool to limit the parallelism of the
@@ -2140,14 +2281,14 @@
   A pool is referenced by its label just like a target.
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   depth*
   * = required
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   if (current_toolchain == default_toolchain) {
@@ -2164,7 +2305,7 @@
   }
 ```
 
-### <a name="print"></a>**打印**打印到控制台.
+### <a name="print"></a>**print**: Prints to the console.
 
 ```
   Prints all arguments to the console separated by spaces. A newline is
@@ -2177,7 +2318,7 @@
   interleaved with itself.
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   print("Hello world")
@@ -2185,7 +2326,7 @@
   print(sources, deps)
 ```
 
-### <a name="process_file_template"></a>**进程文件文件模板**在文件列表上进行模板扩展.
+### <a name="process_file_template"></a>**process_file_template**: Do template expansion over a list of files.
 
 ```
   process_file_template(source_list, template)
@@ -2200,7 +2341,7 @@
   build file).
 ```
 
-#### **争论**
+#### **Arguments**
 
 ```
   The source_list is a list of file names.
@@ -2212,7 +2353,7 @@
   source list is applied. See "gn help source_expansion".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   sources = [
@@ -2231,7 +2372,7 @@
       "//out/Debug/bar.h" ]
 ```
 
-### <a name="read_file"></a>**读文件**将文件读入变量.
+### <a name="read_file"></a>**read_file**: Read a file into a variable.
 
 ```
   read_file(filename, input_conversion)
@@ -2240,7 +2381,7 @@
   file can not be opened.
 ```
 
-#### **争论**
+#### **Arguments**
 
 ```
   filename
@@ -2250,13 +2391,13 @@
       Controls how the file is read and parsed. See "gn help input_conversion".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   lines = read_file("foo.txt", "list lines")
 ```
 
-### <a name="rebase_path"></a>**重新建立路径**将文件或目录重新定位到另一个位置.
+### <a name="rebase_path"></a>**rebase_path**: Rebase a file or directory to another location.
 
 ```
   converted = rebase_path(input,
@@ -2283,7 +2424,7 @@
   can't also generate source-absolute paths without more special-cases.
 ```
 
-#### **争论**
+#### **Arguments**
 
 ```
   input
@@ -2307,7 +2448,7 @@
       current BUILD-file's directory.
 ```
 
-#### **返回值**
+#### **Return value**
 
 ```
   The return value will be the same type as the input value (either a string or
@@ -2322,7 +2463,7 @@
   slash, you can add a dot ("//.").
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   # Convert a file in the current directory to be relative to the build
@@ -2353,7 +2494,7 @@
   }
 ```
 
-### <a name="set_default_toolchain"></a>**设置默认的工具链**设置默认的工具链名称.
+### <a name="set_default_toolchain"></a>**set_default_toolchain**: Sets the default toolchain name.
 
 ```
   set_default_toolchain(toolchain_label)
@@ -2374,14 +2515,14 @@
   64-bit, we want to keep it 32-bits.
 ```
 
-#### **论证**
+#### **Argument**
 
 ```
   toolchain_label
       Toolchain name.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   # Set default toolchain only has an effect when run in the context of the
@@ -2394,7 +2535,7 @@
   }
 ```
 
-### <a name="set_defaults"></a>**设置默认值**设置目标类型的默认值.
+### <a name="set_defaults"></a>**set_defaults**: Set default values for a target type.
 
 ```
   set_defaults(<target_type_name>) { <values...> }
@@ -2415,7 +2556,7 @@
   wants). If you want to share defaults, store them in a separate variable.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   set_defaults("static_library") {
@@ -2429,7 +2570,7 @@
   }
 ```
 
-### <a name="set_sources_assignment_filter"></a>**StIsSuthsCyBasePosivil过滤器**设置一个模式来过滤源文件.
+### <a name="set_sources_assignment_filter"></a>**set_sources_assignment_filter**: Set a pattern to filter source files.
 
 ```
   The sources assignment filter is a list of patterns that remove files from
@@ -2449,7 +2590,7 @@
   This will apply until the current scope exits
 ```
 
-#### **如何使用模式**
+#### **How to use patterns**
 
 ```
   File patterns are VERY limited regular expressions. They must match the
@@ -2468,7 +2609,7 @@
      string, or a slash.
 ```
 
-#### **模式实例**
+#### **Pattern examples**
 
 ```
   "*asdf*"
@@ -2484,7 +2625,7 @@
       Matches "win/foo" and "foo/win/bar.cc" but not "iwin/foo".
 ```
 
-#### **资源分配实例**
+#### **Sources assignment example**
 
 ```
   # Filter out all _win files.
@@ -2494,7 +2635,7 @@
   # Will print [ "a.cc" ]. b_win one was filtered out.
 ```
 
-### <a name="split_list"></a>**分裂列表**将列表分割成n个不同的子列表.
+### <a name="split_list"></a>**split_list**: Splits a list into N different sub-lists.
 
 ```
   result = split_list(input, n)
@@ -2507,7 +2648,7 @@
   The expected use is to divide source files into smaller uniform chunks.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   The code:
@@ -2518,7 +2659,7 @@
     [[1, 2], [3, 4], [5, 6]
 ```
 
-### <a name="string_replace"></a>**斯特林替代**替换给定字符串中的子字符串.
+### <a name="string_replace"></a>**string_replace**: Replaces substring in the given string.
 
 ```
   result = string_replace(str, old, new[, max])
@@ -2529,7 +2670,7 @@
   replaced.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   The code:
@@ -2540,7 +2681,7 @@
     Hello, GN!
 ```
 
-### <a name="template"></a>**模板**定义模板规则.
+### <a name="template"></a>**template**: Define a template rule.
 
 ```
   A template defines a custom name that acts like a function. It provides a way
@@ -2554,7 +2695,7 @@
   across build files.
 ```
 
-#### **变量与模板**:
+#### **Variables and templates**:
 
 ```
   When you call template() it creates a closure around all variables currently
@@ -2585,7 +2726,7 @@
     forward_variables_from(invoker, ["deps", "public_deps"])
 ```
 
-#### **目标命名**
+#### **Target naming**
 
 ```
   Your template should almost always define a built-in target with the name the
@@ -2612,7 +2753,7 @@
   would have a dependency on the action to make it run.
 ```
 
-#### **覆盖建筑目标**
+#### **Overriding builtin targets**
 
 ```
   You can use template to redefine a built-in target in which case your template
@@ -2628,7 +2769,7 @@
     }
 ```
 
-#### **定义模板的示例**
+#### **Example of defining a template**
 
 ```
   template("my_idl") {
@@ -2683,7 +2824,7 @@
   }
 ```
 
-#### **调用生成模板的示例**
+#### **Example of invoking the resulting template**
 
 ```
   # This calls the template code above, defining target_name to be
@@ -2704,9 +2845,9 @@
   }
 ```
 
-### <a name="tool"></a>**工具**指定工具链工具的参数.
+### <a name="tool"></a>**tool**: Specify arguments to a toolchain tool.
 
-#### **用法**
+#### **Usage**
 
 ```
   tool(<tool type>) {
@@ -2714,7 +2855,7 @@
   }
 ```
 
-#### **工具类型**
+#### **Tool types**
 
 ```
     Compiler tools:
@@ -2740,7 +2881,7 @@
       "compile_xcassets": [iOS, macOS] Tool to compile asset catalogs.
 ```
 
-#### **工具变量**
+#### **Tool variables**
 
 ```
     command  [string with substitutions]
@@ -2943,7 +3084,7 @@
         runtime_outputs is empty or unspecified), it will be the link_output.
 ```
 
-#### **工具变量的扩展**
+#### **Expansions for tool variables**
 
 ```
   All paths are relative to the root build directory, which is the current
@@ -3116,7 +3257,7 @@
         the create_bundle target.
 ```
 
-#### **共享库的独立链接和依赖关系**
+#### **Separate linking and dependencies for shared libraries**
 
 ```
   Shared libraries are special in that not all changes to them require that
@@ -3151,7 +3292,7 @@
     }
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   toolchain("my_toolchain") {
@@ -3172,14 +3313,14 @@
   };
 ```
 
-### <a name="toolchain"></a>**工具链**定义一个工具链.
+### <a name="toolchain"></a>**toolchain**: Defines a toolchain.
 
 ```
   A toolchain is a set of commands and build flags used to compile the source
   code. The toolchain() function defines these commands.
 ```
 
-#### **工具链概述**
+#### **Toolchain overview**
 
 ```
   You can have more than one toolchain in use at once in a build and a target
@@ -3218,7 +3359,7 @@
   toolchain definition specifies the arguments to re-invoke the build.
 ```
 
-#### **函数与变量**
+#### **Functions and variables**
 
 ```
   tool()
@@ -3275,7 +3416,7 @@
     of duplicate of rules) so should only be used when absolutely necessary.
 ```
 
-#### **定义工具链的示例**
+#### **Example of defining a toolchain**
 
 ```
   toolchain("32") {
@@ -3303,7 +3444,7 @@
   }
 ```
 
-#### **交叉工具链依赖性示例**
+#### **Example of cross-toolchain dependencies**
 
 ```
   If a 64-bit target wants to depend on a 32-bit binary, it would specify a
@@ -3327,7 +3468,7 @@
     }
 ```
 
-### <a name="write_file"></a>**写入文件**将文件写入磁盘.
+### <a name="write_file"></a>**write_file**: Write a file to disk.
 
 ```
   write_file(filename, data, output_conversion = "")
@@ -3344,7 +3485,7 @@
   files for this purpose. See "gn help response_file_contents".
 ```
 
-#### **争论**
+#### **Arguments**
 
 ```
   filename
@@ -3357,9 +3498,9 @@
     Controls how the output is written. See "gn help output_conversion".
 ```
 
-## <a name="predefined_variables"></a>内置预定义变量
+## <a name="predefined_variables"></a>Built-in predefined variables
 
-### <a name="current_cpu"></a>**当前CPU**当前工具链的处理器体系结构.
+### <a name="current_cpu"></a>**current_cpu**: The processor architecture of the current toolchain.
 
 ```
   The build configuration usually sets this value based on the value of
@@ -3374,7 +3515,7 @@
   See "gn help target_cpu" for a list of common values returned.
 ```
 
-### <a name="current_os"></a>**海伦斯**当前工具链的操作系统.
+### <a name="current_os"></a>**current_os**: The operating system of the current toolchain.
 
 ```
   The build configuration usually sets this value based on the value of
@@ -3389,7 +3530,7 @@
   See "gn help target_os" for a list of common values returned.
 ```
 
-### <a name="current_toolchain"></a>**当前工具链**当前工具链的标签.
+### <a name="current_toolchain"></a>**current_toolchain**: Label of the current toolchain.
 
 ```
   A fully-qualified label representing the current toolchain. You can use this
@@ -3397,7 +3538,7 @@
   "default_toolchain".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   if (current_toolchain == "//build:64_bit_toolchain") {
@@ -3405,14 +3546,14 @@
       ...
 ```
 
-### <a name="default_toolchain"></a>**默认工具链**:[一串]默认工具链的标签.
+### <a name="default_toolchain"></a>**default_toolchain**: [string] Label of the default toolchain.
 
 ```
   A fully-qualified label representing the default toolchain, which may not
   necessarily be the current one (see "current_toolchain").
 ```
 
-### <a name="host_cpu"></a>**主机CPU**GN正在运行的处理器体系结构.
+### <a name="host_cpu"></a>**host_cpu**: The processor architecture that GN is running on.
 
 ```
   This is value is exposed so that cross-compile toolchains can access the host
@@ -3424,14 +3565,14 @@
   builds). The value is not used internally by GN for any purpose.
 ```
 
-#### **一些可能的值**
+#### **Some possible values**
 
 ```
   - "x64"
   - "x86"
 ```
 
-### <a name="host_os"></a>**招待所**:[一串]GN正在运行的操作系统.
+### <a name="host_os"></a>**host_os**: [string] The operating system that GN is running on.
 
 ```
   This value is exposed so that cross-compiles can access the host build
@@ -3441,7 +3582,7 @@
   internally by GN for any purpose.
 ```
 
-#### **一些可能的值**
+#### **Some possible values**
 
 ```
   - "linux"
@@ -3449,7 +3590,7 @@
   - "win"
 ```
 
-### <a name="invoker"></a>**调用程序**:[一串]模板内的调用范围.
+### <a name="invoker"></a>**invoker**: [string] The invoking scope inside a template.
 
 ```
   Inside a template invocation, this variable refers to the scope of the
@@ -3466,7 +3607,7 @@
   See "gn help template" for more examples.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   template("my_template") {
@@ -3481,7 +3622,7 @@
   }
 ```
 
-### <a name="python_path"></a>**Python路径**Python的绝对路径.
+### <a name="python_path"></a>**python_path**: Absolute path of Python.
 
 ```
   Normally used in toolchain definitions if running some command requires
@@ -3489,7 +3630,7 @@
   automatically finds it for you.
 ```
 
-### <a name="root_build_dir"></a>**RooToSudidIdir**:[一串]运行生成命令的目录.
+### <a name="root_build_dir"></a>**root_build_dir**: [string] Directory where build commands are run.
 
 ```
   This is the root build output directory which will be the current directory
@@ -3499,7 +3640,7 @@
   convert arguments to be relative to a script's current directory.
 ```
 
-### <a name="root_gen_dir"></a>**罗特根格迪尔**工具链生成文件的目录.
+### <a name="root_gen_dir"></a>**root_gen_dir**: Directory for the toolchain's generated files.
 
 ```
   Absolute path to the root of the generated output directory tree for the
@@ -3515,7 +3656,7 @@
   files. It will be inside the root generated dir.
 ```
 
-### <a name="root_out_dir"></a>**萝丝**:[一串]工具链输出文件的根目录.
+### <a name="root_out_dir"></a>**root_out_dir**: [string] Root directory for toolchain output files.
 
 ```
   Absolute path to the root of the output directory tree for the current
@@ -3533,7 +3674,7 @@
   files. It will be inside the root output dir.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   action("myscript") {
@@ -3542,7 +3683,7 @@
   }
 ```
 
-### <a name="target_cpu"></a>**目标处理器**所需的CPU架构用于构建.
+### <a name="target_cpu"></a>**target_cpu**: The desired cpu architecture for the build.
 
 ```
   This value should be used to indicate the desired architecture for the
@@ -3562,7 +3703,7 @@
   command line or in the args.gn file.
 ```
 
-#### **可能值**
+#### **Possible values**
 
 ```
   - "x86"
@@ -3572,7 +3713,7 @@
   - "mipsel"
 ```
 
-### <a name="target_gen_dir"></a>**达格尔特根尼迪尔**目标生成文件的目录.
+### <a name="target_gen_dir"></a>**target_gen_dir**: Directory for a target's generated files.
 
 ```
   Absolute path to the target's generated file directory. This will be the
@@ -3588,7 +3729,7 @@
   See also "gn help root_gen_dir".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   action("myscript") {
@@ -3597,7 +3738,7 @@
   }
 ```
 
-### <a name="target_name"></a>**目标名称**:[一串]当前目标的名称.
+### <a name="target_name"></a>**target_name**: [string] The name of the current target.
 
 ```
   Inside a target or template invocation, this variable refers to the name
@@ -3618,7 +3759,7 @@
   See "gn help template" for more examples.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   executable("doom_melon") {
@@ -3637,7 +3778,7 @@
   }
 ```
 
-### <a name="target_os"></a>**达特诺斯**所需的操作系统用于构建.
+### <a name="target_os"></a>**target_os**: The desired operating system for the build.
 
 ```
   This value should be used to indicate the desired operating system for the
@@ -3667,7 +3808,7 @@
   line or in the args.gn file.
 ```
 
-#### **可能值**
+#### **Possible values**
 
 ```
   - "android"
@@ -3679,7 +3820,7 @@
   - "win"
 ```
 
-### <a name="target_out_dir"></a>**达格特奥特迪尔**:[一串]目标输出文件的目录.
+### <a name="target_out_dir"></a>**target_out_dir**: [string] Directory for target output files.
 
 ```
   Absolute path to the target's generated file directory. If your current
@@ -3694,7 +3835,7 @@
   See also "gn help root_out_dir".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   action("myscript") {
@@ -3703,9 +3844,9 @@
   }
 ```
 
-## <a name="target_variables"></a>在目标中设置的变量
+## <a name="target_variables"></a>Variables you set in targets
 
-### <a name="all_dependent_configs"></a>**ALL依赖结构**配置为强制依赖.
+### <a name="all_dependent_configs"></a>**all_dependent_configs**: Configs to be forced on dependents.
 
 ```
   A list of config labels.
@@ -3724,7 +3865,7 @@
   See also "public_configs".
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -3742,7 +3883,7 @@
      recursively.
 ```
 
-### <a name="allow_circular_includes_from"></a>**允许循环**许可证包括DEPS.
+### <a name="allow_circular_includes_from"></a>**allow_circular_includes_from**: Permit includes from deps.
 
 ```
   A list of target labels. Must be a subset of the target's "deps". These
@@ -3756,7 +3897,7 @@
   linked together in any output.
 ```
 
-#### **细节**
+#### **Details**
 
 ```
   Normally, for a file in target A to include a file from target B, A must list
@@ -3777,7 +3918,7 @@
   direction.
 ```
 
-#### **危险**
+#### **Danger**
 
 ```
   In the above example, A's headers are likely to include headers from A's
@@ -3796,7 +3937,7 @@
   collect such dependencies they both depend on).
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   source_set("a") {
@@ -3816,7 +3957,7 @@
   }
 ```
 
-### <a name="arflags"></a>**旗帜**参数传递给STATICH图书馆的存档.
+### <a name="arflags"></a>**arflags**: Arguments passed to static_library archiver.
 
 ```
   A list of flags passed to the archive/lib command that creates static
@@ -3832,7 +3973,7 @@
   themselves.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -3850,7 +3991,7 @@
      recursively.
 ```
 
-### <a name="args"></a>**阿尔茨海默病**参数传递给一个动作.
+### <a name="args"></a>**args**: Arguments passed to an action.
 
 ```
   For action and action_foreach targets, args is the list of arguments to pass
@@ -3860,7 +4001,7 @@
   See also "gn help action" and "gn help action_foreach".
 ```
 
-### <a name="asmflags"></a>**asmflags**标志传递给汇编程序.
+### <a name="asmflags"></a>**asmflags**: Flags passed to the assembler.
 
 ```
   A list of strings.
@@ -3869,7 +4010,7 @@
   file as input.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -3887,7 +4028,7 @@
      recursively.
 ```
 
-### <a name="assert_no_deps"></a>**断言**确保在这些目标上没有DEPS.
+### <a name="assert_no_deps"></a>**assert_no_deps**: Ensure no deps on these targets.
 
 ```
   A list of label patterns.
@@ -3915,7 +4056,7 @@
   targets you want to apply that assertion to.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   executable("doom_melon") {
@@ -3928,7 +4069,7 @@
   }
 ```
 
-### <a name="bundle_contents_dir"></a>**捆绑式目录**:{{BultLyCordss}DR}}的展开
+### <a name="bundle_contents_dir"></a>**bundle_contents_dir**: Expansion of {{bundle_contents_dir}} in
 
 ```
                              create_bundle.
@@ -3942,7 +4083,7 @@
   See "gn help bundle_root_dir" for examples.
 ```
 
-### <a name="bundle_deps_filter"></a>**Baulyer-DePSSH滤波器**:[标签列表]过滤掉的标签列表.
+### <a name="bundle_deps_filter"></a>**bundle_deps_filter**: [label list] A list of labels that are filtered out.
 
 ```
   A list of target labels.
@@ -3958,7 +4099,7 @@
   See "gn help create_bundle" for more information.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   create_bundle("today_extension") {
@@ -3974,7 +4115,7 @@
   }
 ```
 
-### <a name="bundle_executable_dir"></a>**捆绑式执行器**扩展{{BaseLyExcutuBeLyDiR}}
+### <a name="bundle_executable_dir"></a>**bundle_executable_dir**: Expansion of {{bundle_executable_dir}} in
 
 ```
                               create_bundle.
@@ -3988,7 +4129,7 @@
   See "gn help bundle_root_dir" for examples.
 ```
 
-### <a name="bundle_plugins_dir"></a>**捆绑式插件**:在{CeaType束中{{BaulLyPuxSnIs}DR}}的展开.
+### <a name="bundle_plugins_dir"></a>**bundle_plugins_dir**: Expansion of {{bundle_plugins_dir}} in create_bundle.
 
 ```
   A string corresponding to a path in $root_build_dir.
@@ -4000,7 +4141,7 @@
   See "gn help bundle_root_dir" for examples.
 ```
 
-### <a name="bundle_resources_dir"></a>**捆绑资源**扩展{{BaseLyReassCydidi}}
+### <a name="bundle_resources_dir"></a>**bundle_resources_dir**: Expansion of {{bundle_resources_dir}} in
 
 ```
                              create_bundle.
@@ -4014,7 +4155,7 @@
   See "gn help bundle_root_dir" for examples.
 ```
 
-### <a name="bundle_root_dir"></a>**丛根**在CureType丛中{{BeuleLoRoTo.dir}}的展开.
+### <a name="bundle_root_dir"></a>**bundle_root_dir**: Expansion of {{bundle_root_dir}} in create_bundle.
 
 ```
   A string corresponding to a path in root_build_dir.
@@ -4024,7 +4165,7 @@
   correspond to a path under root_build_dir.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   bundle_data("info_plist") {
@@ -4042,7 +4183,7 @@
   }
 ```
 
-### <a name="cflags*"></a>**cFLAGS \***标志传递给C编译器.
+### <a name="cflags*"></a>**cflags\***: Flags passed to the C compiler.
 
 ```
   A list of strings.
@@ -4058,7 +4199,7 @@
   See also "asmflags" for flags for assembly-language files.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4076,7 +4217,7 @@
      recursively.
 ```
 
-### <a name="cflags*"></a>**cFLAGS \***标志传递给C编译器.
+### <a name="cflags*"></a>**cflags\***: Flags passed to the C compiler.
 
 ```
   A list of strings.
@@ -4092,7 +4233,7 @@
   See also "asmflags" for flags for assembly-language files.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4110,7 +4251,7 @@
      recursively.
 ```
 
-### <a name="cflags*"></a>**cFLAGS \***标志传递给C编译器.
+### <a name="cflags*"></a>**cflags\***: Flags passed to the C compiler.
 
 ```
   A list of strings.
@@ -4126,7 +4267,7 @@
   See also "asmflags" for flags for assembly-language files.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4144,7 +4285,7 @@
      recursively.
 ```
 
-### <a name="cflags*"></a>**cFLAGS \***标志传递给C编译器.
+### <a name="cflags*"></a>**cflags\***: Flags passed to the C compiler.
 
 ```
   A list of strings.
@@ -4160,7 +4301,7 @@
   See also "asmflags" for flags for assembly-language files.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4178,7 +4319,7 @@
      recursively.
 ```
 
-### <a name="cflags*"></a>**cFLAGS \***标志传递给C编译器.
+### <a name="cflags*"></a>**cflags\***: Flags passed to the C compiler.
 
 ```
   A list of strings.
@@ -4194,7 +4335,7 @@
   See also "asmflags" for flags for assembly-language files.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4212,7 +4353,7 @@
      recursively.
 ```
 
-### <a name="check_includes"></a>**检查包括**:[布尔]控制是否检查目标文件.
+### <a name="check_includes"></a>**check_includes**: [boolean] Controls whether a target's files are checked.
 
 ```
   When true (the default), the "gn check" command (as well as "gn gen" with the
@@ -4231,7 +4372,7 @@
   advice on how to pass a check in problematic cases.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   source_set("busted_includes") {
@@ -4241,7 +4382,7 @@
   }
 ```
 
-### <a name="code_signing_args"></a>**密码代号**:[字符串表]传递给代码签名脚本的参数.
+### <a name="code_signing_args"></a>**code_signing_args**: [string list] Arguments passed to code signing script.
 
 ```
   For create_bundle targets, code_signing_args is the list of arguments to pass
@@ -4251,7 +4392,7 @@
   See also "gn help create_bundle".
 ```
 
-### <a name="code_signing_outputs"></a>**代码输出**:[文件列表]用于代码签名步骤的输出文件.
+### <a name="code_signing_outputs"></a>**code_signing_outputs**: [file list] Output files for code signing step.
 
 ```
   Outputs from the code signing step of a create_bundle target. Must refer to
@@ -4260,7 +4401,7 @@
   See also "gn help create_bundle".
 ```
 
-### <a name="code_signing_script"></a>**代码签名脚本**:[文件名]用于代码签名的脚本.
+### <a name="code_signing_script"></a>**code_signing_script**: [file name] Script for code signing."
 
 ```
   An absolute or buildfile-relative file name of a Python script to run for a
@@ -4269,7 +4410,7 @@
   See also "gn help create_bundle".
 ```
 
-### <a name="code_signing_sources"></a>**编码信号源**:[文件列表]代码签名步骤的来源.
+### <a name="code_signing_sources"></a>**code_signing_sources**: [file list] Sources for code signing step.
 
 ```
   A list of files used as input for code signing script step of a create_bundle
@@ -4279,7 +4420,7 @@
   See also "gn help create_bundle".
 ```
 
-### <a name="complete_static_lib"></a>**完全静态库**:[布尔]将所有DEPS链接到静态库中.
+### <a name="complete_static_lib"></a>**complete_static_lib**: [boolean] Links all deps into a static library.
 
 ```
   A static library normally doesn't include code from dependencies, but instead
@@ -4306,7 +4447,7 @@
   could be considered conceptually a member of both. libraries.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   static_library("foo") {
@@ -4315,13 +4456,13 @@
   }
 ```
 
-### <a name="configs"></a>**组态**:应用于此目标或配置的配置.
+### <a name="configs"></a>**configs**: Configs applying to this target or config.
 
 ```
   A list of config labels.
 ```
 
-#### **配置目标**
+#### **Configs on a target**
 
 ```
   When used on a target, the include_dirs, defines, etc. in each config are
@@ -4339,7 +4480,7 @@
   defined, it can add to or remove from this list.
 ```
 
-#### **配置一个配置文件**
+#### **Configs on a config**
 
 ```
   It is possible to create composite configs by specifying configs on a config.
@@ -4363,7 +4504,7 @@
      complicates the implementation.)
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4381,7 +4522,7 @@
      recursively.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   # Configs on a target.
@@ -4409,7 +4550,7 @@
   }
 ```
 
-### <a name="data"></a>**数据**运行时数据文件依赖项.
+### <a name="data"></a>**data**: Runtime data file dependencies.
 
 ```
   Lists files or directories required to run the given target. These are
@@ -4439,7 +4580,7 @@
   See "gn help runtime_deps" for how these are used.
 ```
 
-### <a name="data_deps"></a>**达塔格**非链接依赖关系.
+### <a name="data_deps"></a>**data_deps**: Non-linked dependencies.
 
 ```
   A list of target labels.
@@ -4457,7 +4598,7 @@
   See also "gn help deps" and "gn help data".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   executable("foo") {
@@ -4466,7 +4607,7 @@
   }
 ```
 
-### <a name="defines"></a>**定义**C预处理器定义.
+### <a name="defines"></a>**defines**: C preprocessor defines.
 
 ```
   A list of strings
@@ -4475,7 +4616,7 @@
   may or may not include an "=" to assign a value.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4493,13 +4634,13 @@
      recursively.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   defines = [ "AWESOME_FEATURE", "LOG_LEVEL=3" ]
 ```
 
-### <a name="depfile"></a>**外锉**:[一串]用于操作的输入依赖项的文件名.
+### <a name="depfile"></a>**depfile**: [string] File name for input dependencies for actions.
 
 ```
   If nonempty, this string specifies that the current action or action_foreach
@@ -4523,7 +4664,7 @@
   action's "outputs" unless another target will use the file as an input.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   action_foreach("myscript_target") {
@@ -4539,7 +4680,7 @@
   }
 ```
 
-### <a name="deps"></a>**deps**:私有链接依赖项.
+### <a name="deps"></a>**deps**: Private linked dependencies.
 
 ```
   A list of target labels.
@@ -4550,7 +4691,7 @@
   not forwarded.
 ```
 
-#### **依赖传播的细节**
+#### **Details of dependency propagation**
 
 ```
   Source sets, shared libraries, and non-complete static libraries will be
@@ -4573,7 +4714,7 @@
   See also "public_deps".
 ```
 
-### <a name="friend"></a>**朋友**允许目标包含私有标头.
+### <a name="friend"></a>**friend**: Allow targets to include private headers.
 
 ```
   A list of label patterns (see "gn help label_pattern") that allow dependent
@@ -4600,7 +4741,7 @@
   public or private dependencies. Friend annotations do not affect visibility.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   static_library("lib") {
@@ -4635,7 +4776,7 @@
   }
 ```
 
-### <a name="include_dirs"></a>**夹杂物**另外包括目录.
+### <a name="include_dirs"></a>**include_dirs**: Additional include directories.
 
 ```
   A list of source directories.
@@ -4644,7 +4785,7 @@
   in the affected target.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4662,13 +4803,13 @@
      recursively.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   include_dirs = [ "src/include", "//third_party/foo" ]
 ```
 
-### <a name="inputs"></a>**输入**附加编译时间依赖关系.
+### <a name="inputs"></a>**inputs**: Additional compile-time dependencies.
 
 ```
   Inputs are compile-time dependencies of the current target. This means that
@@ -4678,7 +4819,7 @@
   Inputs are typically only used for action and action_foreach targets.
 ```
 
-#### **动作输入**
+#### **Inputs for actions**
 
 ```
   For action and action_foreach targets, inputs should be the inputs to script
@@ -4699,7 +4840,7 @@
   hardcoding the list.
 ```
 
-#### **脚本输入**
+#### **Script input gotchas**
 
 ```
   It may be tempting to write a script that enumerates all files in a directory
@@ -4716,7 +4857,7 @@
   when it has changed in any way and the action will re-run.
 ```
 
-#### **二进制目标的输入**
+#### **Inputs for binary targets**
 
 ```
   Any input dependencies will be resolved before compiling any sources or
@@ -4730,7 +4871,7 @@
   want to split those into a separate target to avoid unnecessary recompiles.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   action("myscript") {
@@ -4739,7 +4880,7 @@
   }
 ```
 
-### <a name="ldflags"></a>**ldflags**标志传递给链接器.
+### <a name="ldflags"></a>**ldflags**: Flags passed to the linker.
 
 ```
   A list of strings.
@@ -4754,7 +4895,7 @@
   public_configs.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4772,7 +4913,7 @@
      recursively.
 ```
 
-### <a name="lib_dirs"></a>**利布迪斯**附加的图书馆目录.
+### <a name="lib_dirs"></a>**lib_dirs**: Additional library directories.
 
 ```
   A list of directories.
@@ -4788,7 +4929,7 @@
   will be the one used).
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4810,13 +4951,13 @@
   are not already in the list.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   lib_dirs = [ "/usr/lib/foo", "lib/doom_melon" ]
 ```
 
-### <a name="libs"></a>**伦敦议会大厦**要连接的其他库.
+### <a name="libs"></a>**libs**: Additional libraries to link.
 
 ```
   A list of library names or library paths.
@@ -4831,7 +4972,7 @@
   will be the one used).
 ```
 
-#### **LIBS的类型**
+#### **Types of libs**
 
 ```
   There are several different things that can be expressed in libs:
@@ -4858,7 +4999,7 @@
       framework dependencies.
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -4880,7 +5021,7 @@
   are not already in the list.
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   On Windows:
@@ -4890,7 +5031,7 @@
     libs = [ "ld" ]
 ```
 
-### <a name="output_dir"></a>**输出输出**:[目录]目录输出文件.
+### <a name="output_dir"></a>**output_dir**: [directory] Directory to put output file in.
 
 ```
   For library and executable targets, overrides the directory for the final
@@ -4909,7 +5050,7 @@
   undefined or empty.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   shared_library("doom_melon") {
@@ -4918,7 +5059,7 @@
   }
 ```
 
-### <a name="output_extension"></a>**输出扩展**用于输出文件扩展名的值.
+### <a name="output_extension"></a>**output_extension**: Value to use for the output's file extension.
 
 ```
   Normally the file extension for a target is based on the target type and the
@@ -4934,7 +5075,7 @@
   "gn help tool".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   shared_library("freetype") {
@@ -4955,7 +5096,7 @@
   }
 ```
 
-### <a name="output_name"></a>**输出名**为默认的输出文件定义一个名称.
+### <a name="output_name"></a>**output_name**: Define a name for the output file other than the default.
 
 ```
   Normally the output name of a target will be based on the target name, so the
@@ -4974,7 +5115,7 @@
   This variable is valid for all binary output target types.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   static_library("doom_melon") {
@@ -4982,7 +5123,7 @@
   }
 ```
 
-### <a name="output_prefix_override"></a>**OuttoPoPixFixRoopRoad**不要对输出名称使用前缀.
+### <a name="output_prefix_override"></a>**output_prefix_override**: Don't use prefix for output name.
 
 ```
   A boolean that overrides the output prefix for a target. Defaults to false.
@@ -4996,7 +5137,7 @@
   See also "gn help output_extension".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   shared_library("doom_melon") {
@@ -5007,7 +5148,7 @@
   }
 ```
 
-### <a name="outputs"></a>**输出**为动作和复制目标输出文件.
+### <a name="outputs"></a>**outputs**: Output files for actions and copy targets.
 
 ```
   Outputs is valid for "copy", "action", and "action_foreach" target types and
@@ -5031,7 +5172,7 @@
     with no source expansions. See "gn help action".
 ```
 
-### <a name="partial_info_plist"></a>**偏代数函数**:[文件名]来自资产目录编译器的路径PLIST.
+### <a name="partial_info_plist"></a>**partial_info_plist**: [filename] Path plist from asset catalog compiler.
 
 ```
   Valid for create_bundle target, corresponds to the path for the partial
@@ -5042,14 +5183,14 @@
   been invoked or not. See "gn help create_bundle".
 ```
 
-### <a name="pool"></a>**水塘**动作所使用的池的标签.
+### <a name="pool"></a>**pool**: Label of the pool used by the action.
 
 ```
   A fully-qualified label representing the pool that will be used for the
   action. Pools are defined using the pool() {...} declaration.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   action("action") {
@@ -5058,7 +5199,7 @@
   }
 ```
 
-### <a name="precompiled_header"></a>**预编译头**:[一串]头文件进行预编译.
+### <a name="precompiled_header"></a>**precompiled_header**: [string] Header file to precompile.
 
 ```
   Precompiled headers will be used when a target specifies this value, or a
@@ -5076,7 +5217,7 @@
   includes in __cplusplus #ifdefs so the file will compile in C mode.
 ```
 
-#### **GCC预编译头**
+#### **GCC precompiled headers**
 
 ```
   When using GCC-style precompiled headers, "precompiled_source" contains the
@@ -5087,7 +5228,7 @@
   headers.
 ```
 
-#### **MSVC预编译头**
+#### **MSVC precompiled headers**
 
 ```
   When using MSVC-style precompiled headers, the "precompiled_header" value is
@@ -5127,13 +5268,13 @@
       ...
 ```
 
-### <a name="precompiled_header_type"></a>**预编译标题文件类型**:[一串]"GCC"或"MSVC".
+### <a name="precompiled_header_type"></a>**precompiled_header_type**: [string] "gcc" or "msvc".
 
 ```
   See "gn help precompiled_header".
 ```
 
-### <a name="precompiled_source"></a>**预编译源**:[文件名]源文件进行预编译.
+### <a name="precompiled_source"></a>**precompiled_source**: [file name] Source file to precompile.
 
 ```
   The source file that goes along with the precompiled_header when using
@@ -5141,7 +5282,7 @@
   of the target. See "gn help precompiled_header".
 ```
 
-### <a name="product_type"></a>**产品类型**XCODES项目的产品类型.
+### <a name="product_type"></a>**product_type**: Product type for Xcode projects.
 
 ```
   Correspond to the type of the product of a create_bundle target. Only
@@ -5151,7 +5292,7 @@
   non-empty product_type will have a corresponding target in Xcode project.
 ```
 
-### <a name="public"></a>**公众的**为目标声明公共头文件.
+### <a name="public"></a>**public**: Declare public header files for a target.
 
 ```
   A list of files that other targets can include. These permissions are checked
@@ -5194,7 +5335,7 @@
   complete before any dependents link.
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   These exact files are public:
@@ -5205,7 +5346,7 @@
     public = []
 ```
 
-### <a name="public_configs"></a>**公共配置**:将配置应用于依赖项.
+### <a name="public_configs"></a>**public_configs**: Configs to be applied on dependents.
 
 ```
   A list of config labels.
@@ -5218,7 +5359,7 @@
   See also "gn help all_dependent_configs".
 ```
 
-#### **公共配置的传播**
+#### **Propagation of public configs**
 
 ```
   Public configs are applied to all targets that depend directly on this one.
@@ -5257,7 +5398,7 @@
   toolchain") on the toolchain of the target declaring the public_config.
 ```
 
-#### **避免将公共配置应用于此目标**
+#### **Avoiding applying public configs to this target**
 
 ```
   If you want the config to apply to targets that depend on this one, but NOT
@@ -5279,7 +5420,7 @@
     }
 ```
 
-#### **标志和值的排序**
+#### **Ordering of flags and values**
 
 ```
   1. Those set on the current target (not in a config).
@@ -5297,7 +5438,7 @@
      recursively.
 ```
 
-### <a name="public_deps"></a>**公开发行人**声明公共依赖.
+### <a name="public_deps"></a>**public_deps**: Declare public dependencies.
 
 ```
   Public dependencies are like private dependencies (see "gn help deps") but
@@ -5319,7 +5460,7 @@
   See also "gn help public_configs".
 ```
 
-#### **讨论**
+#### **Discussion**
 
 ```
   Say you have three targets: A -> B -> C. C's visibility may allow B to depend
@@ -5334,7 +5475,7 @@
   be part of a unit, you should use public_deps instead of deps.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   # This target can include files from "c" but not from
@@ -5349,7 +5490,7 @@
   }
 ```
 
-### <a name="response_file_contents"></a>**响应文件内容**动作的响应文件的内容.
+### <a name="response_file_contents"></a>**response_file_contents**: Contents of a response file for actions.
 
 ```
   Sometimes the arguments passed to a script can be too long for the system's
@@ -5369,7 +5510,7 @@
   "shlex.split(file_contents)".
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   action("process_lots_of_files") {
@@ -5388,7 +5529,7 @@
   }
 ```
 
-### <a name="script"></a>**脚本**用于动作的脚本文件.
+### <a name="script"></a>**script**: Script file for actions.
 
 ```
   An absolute or buildfile-relative file name of a Python script to run for a
@@ -5396,14 +5537,14 @@
   action_foreach").
 ```
 
-### <a name="sources"></a>**来源**目标源文件
+### <a name="sources"></a>**sources**: Source files for a target
 
 ```
   A list of files. Non-absolute paths will be resolved relative to the current
   build file.
 ```
 
-#### **二元目标源**
+#### **Sources for binary targets**
 
 ```
   For binary targets (source sets, executables, and libraries), the known file
@@ -5420,7 +5561,7 @@
   library they're linked into).
 ```
 
-#### **非二进制目标的来源**
+#### **Sources for non-binary targets**
 
 ```
   action_foreach
@@ -5435,7 +5576,7 @@
     The source are the source files to copy.
 ```
 
-### <a name="testonly"></a>**仅测试**声明一个目标只能用于测试.
+### <a name="testonly"></a>**testonly**: Declares a target must only be used for testing.
 
 ```
   Boolean. Defaults to false.
@@ -5448,7 +5589,7 @@
   final product.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   source_set("test_support") {
@@ -5457,7 +5598,7 @@
   }
 ```
 
-### <a name="visibility"></a>**能见度**可以依赖于目标的标签列表.
+### <a name="visibility"></a>**visibility**: A list of labels that can depend on a target.
 
 ```
   A list of labels and label patterns that define which targets can depend on
@@ -5475,7 +5616,7 @@
   target, and the targets will inherit that scope and see the definition.
 ```
 
-#### **模式**
+#### **Patterns**
 
 ```
   See "gn help label_pattern" for more details on what types of patterns are
@@ -5484,7 +5625,7 @@
   toolchains will be matched.
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   Only targets in the current buildfile ("private"):
@@ -5513,7 +5654,7 @@
     visibility = [ "./*", "//bar/*" ]
 ```
 
-### <a name="write_runtime_deps"></a>**RealTime-DEPS**将目标的RunTime-DEPS写入给定路径.
+### <a name="write_runtime_deps"></a>**write_runtime_deps**: Writes the target's runtime_deps to the given path.
 
 ```
   Does not synchronously write the file, but rather schedules it to be written
@@ -5534,7 +5675,7 @@
   help --runtime-deps-list-file").
 ```
 
-### <a name="xcode_extra_attributes"></a>**XCODE-外层属性**:[范围]XCODE项目的额外属性.
+### <a name="xcode_extra_attributes"></a>**xcode_extra_attributes**: [scope] Extra attributes for Xcode projects.
 
 ```
   The value defined in this scope will be copied to the EXTRA_ATTRIBUTES
@@ -5544,7 +5685,7 @@
   See "gn help create_bundle" for more information.
 ```
 
-### <a name="test_application_name"></a>**测试应用程序名称**测试单位名称或UI测试目标的应用程序名称.
+### <a name="test_application_name"></a>**test_application_name**: Test application name for unit or ui test target.
 
 ```
   Each unit and ui test target must have a test application target, and this
@@ -5554,7 +5695,7 @@
   See "gn help create_bundle" for more information.
 ```
 
-#### **例子**
+#### **Example**
 
 ```
   create_bundle("chrome_xctest") {
@@ -5563,16 +5704,16 @@
   }
 ```
 
-## <a name="other"></a>其他帮助主题
+## <a name="other"></a>Other help topics
 
-### <a name="buildargs"></a>**构建参数概述**
+### <a name="buildargs"></a>**Build Arguments Overview**
 
 ```
   Build arguments are variables passed in from outside of the build that build
   files can query to determine how the build works.
 ```
 
-#### **如何设置生成参数**
+#### **How build arguments are set**
 
 ```
   First, system default arguments are set based on the current system. The
@@ -5601,7 +5742,7 @@
   "declare_args" call, a nonfatal error will be displayed.
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   gn args out/FooBar
@@ -5616,7 +5757,7 @@
       for your shell to pass through strings values.)
 ```
 
-#### **如何使用生成参数**
+#### **How build arguments are used**
 
 ```
   If you want to use an argument, you use declare_args() and specify default
@@ -5630,7 +5771,7 @@
   "import"-ed file if you want such arguments to apply to multiple buildfiles.
 ```
 
-### <a name="dotfile"></a>**GN文件**
+### <a name="dotfile"></a>**.gn file**
 
 ```
   When gn starts, it will search the current directory and parent directories
@@ -5647,7 +5788,7 @@
     gn gen out/Debug --root=/home/build --dotfile=/home/my_gn_file.gn
 ```
 
-#### **变量**
+#### **Variables**
 
 ```
   arg_file_template [optional]
@@ -5717,7 +5858,7 @@
       default values that need to be changed for whatever reason.
 ```
 
-#### **GN文件内容**
+#### **Example .gn file contents**
 
 ```
   buildconfig = "//build/config/BUILDCONFIG.gn"
@@ -5738,9 +5879,9 @@
   }
 ```
 
-### <a name="execution"></a>**建立图形和执行概述**
+### <a name="execution"></a>**Build graph and execution overview**
 
-#### **整体建造流程**
+#### **Overall build flow**
 
 ```
   1. Look for ".gn" file (see "gn help dotfile") in the current directory and
@@ -5765,7 +5906,7 @@
   6. When all targets are resolved, write out the root build.ninja file.
 ```
 
-#### **执行目标定义和模板**
+#### **Executing target definitions and templates**
 
 ```
   Build files are loaded in parallel. This means it is impossible to
@@ -5792,7 +5933,7 @@
   global compiler and linker flags.
 ```
 
-#### **哪些目标是建立的**
+#### **Which targets are built**
 
 ```
   All targets encountered in the default toolchain (see "gn help toolchain")
@@ -5807,7 +5948,7 @@
   See also "gn help ninja_rules".
 ```
 
-#### **依赖关系**
+#### **Dependencies**
 
 ```
   The only difference between "public_deps" and "deps" except for pushing
@@ -5822,9 +5963,9 @@
   future, do not rely on this behavior.
 ```
 
-### <a name="grammar"></a>**GN构建文件的语言和语法**
+### <a name="grammar"></a>**Language and grammar for GN build files**
 
-#### **令牌**
+#### **Tokens**
 
 ```
   GN build files are read as sequences of tokens.  While splitting the file
@@ -5832,7 +5973,7 @@
   valid token.
 ```
 
-#### **空白与评论**
+#### **White space and comments**
 
 ```
   White space is comprised of spaces (U+0020), horizontal tabs (U+0009),
@@ -5844,7 +5985,7 @@
   that would otherwise combine into a single token.
 ```
 
-#### **标识符**
+#### **Identifiers**
 
 ```
   Identifiers name variables and functions.
@@ -5854,7 +5995,7 @@
       digit      = "0" ... "9" .
 ```
 
-#### **关键词**
+#### **Keywords**
 
 ```
   The following keywords are reserved and may not be used as identifiers:
@@ -5862,7 +6003,7 @@
           else    false   if      true
 ```
 
-#### **整数字面值**
+#### **Integer literals**
 
 ```
   An integer literal represents a decimal integer value.
@@ -5872,7 +6013,7 @@
   Leading zeros and negative zero are disallowed.
 ```
 
-#### **字符串常量**
+#### **String literals**
 
 ```
   A string literal represents a string value consisting of the quoted
@@ -5906,7 +6047,7 @@
   otherwise-ambiguous cases.
 ```
 
-#### **标点符号**
+#### **Punctuation**
 
 ```
   The following character sequences represent punctuation:
@@ -5917,7 +6058,7 @@
                           &&      ||      .       ,
 ```
 
-#### **语法**
+#### **Grammar**
 
 ```
   The input tokens form a syntax tree following a context-free grammar:
@@ -5954,7 +6095,7 @@
   All binary operators are left-associative.
 ```
 
-#### **类型**
+#### **Types**
 
 ```
   The GN language is dynamically typed. The following types are used:
@@ -5976,7 +6117,7 @@
      "Scopes" below for more.
 ```
 
-#### **列表**
+#### **Lists**
 
 ```
   Lists are created with [] and using commas to separate items:
@@ -6012,7 +6153,7 @@
   more.
 ```
 
-#### **作用域**
+#### **Scopes**
 
 ```
   All execution happens in the context of a scope which holds the current state
@@ -6046,11 +6187,11 @@
     empty_scope.new_thing = [ 1, 2, 3 ]
 ```
 
-### <a name="input_conversion"></a>**输入和输出转换是对文件和过程函数的参数.**
+### <a name="input_conversion"></a>**Input and output conversions are arguments to file and process functions**
 
-#### **它指定如何将数据转换为外部格式或从外部格式转换数据.可能**
+#### **that specify how to convert data to or from external formats. The possible**
 
-#### **指定转换的参数的值为**:
+#### **values for parameters specifying conversions are**:
 
 ```
   "" (the default)
@@ -6151,7 +6292,7 @@
       whitespace anyway.
 ```
 
-### <a name="label_pattern"></a>**标签模式**
+### <a name="label_pattern"></a>**Label patterns**
 
 ```
   A label pattern is a way of expressing one or more labels in a portion of the
@@ -6188,7 +6329,7 @@
         toolchain.
 ```
 
-### <a name="labels"></a>**关于标签**
+### <a name="labels"></a>**About labels**
 
 ```
   Everything that can participate in the dependency graph (targets, configs,
@@ -6207,7 +6348,7 @@
     /C:/Program Files/MyLibs:bar   (Windows)
 ```
 
-#### **工具链**
+#### **Toolchains**
 
 ```
   A canonical label includes the label of the toolchain being used. Normally,
@@ -6220,7 +6361,7 @@
   "//build/toolchain/win" to know how to compile this target.
 ```
 
-#### **相对标签**
+#### **Relative labels**
 
 ```
   If you want to refer to something in the same buildfile, you can omit
@@ -6239,7 +6380,7 @@
     ../net:url_request
 ```
 
-#### **隐名**
+#### **Implicit names**
 
 ```
   If a name is unspecified, it will inherit the directory name. Stylistically,
@@ -6249,9 +6390,9 @@
     //tools/gn  ->  //tools/gn:gn
 ```
 
-### <a name="ninja_rules"></a>**ninja建造规则**
+### <a name="ninja_rules"></a>**Ninja build rules**
 
-#### **"全部"和"默认"规则**
+#### **The "all" and "default" rules**
 
 ```
   All generated targets (see "gn help execution") will be added to an implicit
@@ -6262,7 +6403,7 @@
   used.
 ```
 
-#### **虚假规则**
+#### **Phony rules**
 
 ```
   GN generates Ninja "phony" rules for targets in the default toolchain.  The
@@ -6299,7 +6440,7 @@
   Ninja the exact name of the output file relative to the build directory.
 ```
 
-### <a name="nogncheck"></a>**诺查克**从检查中跳过一个包含行.
+### <a name="nogncheck"></a>**nogncheck**: Skip an include line from checking.
 
 ```
   GN's header checker helps validate that the includes match the build
@@ -6329,7 +6470,7 @@
   incorrect when the condition is false.
 ```
 
-#### **更多信息**
+#### **More information**
 
 ```
   The topic "gn help check" has general information on how checking works and
@@ -6337,11 +6478,11 @@
   "gn help check_includes".
 ```
 
-### <a name="output_conversion"></a>**输入和输出转换是对文件和过程函数的参数.**
+### <a name="output_conversion"></a>**Input and output conversions are arguments to file and process functions**
 
-#### **它指定如何将数据转换为外部格式或从外部格式转换数据.可能**
+#### **that specify how to convert data to or from external formats. The possible**
 
-#### **指定转换的参数的值为**:
+#### **values for parameters specifying conversions are**:
 
 ```
   "" (the default)
@@ -6442,7 +6583,7 @@
       whitespace anyway.
 ```
 
-### <a name="runtime_deps"></a>**运行时依赖**
+### <a name="runtime_deps"></a>**Runtime dependencies**
 
 ```
   Runtime dependencies of a target are exposed via the "runtime_deps" category
@@ -6456,7 +6597,7 @@
   considered runtime dependencies of themselves.
 ```
 
-#### **可执行程序**
+#### **Executables**
 
 ```
   Executable targets and those executable targets' transitive dependencies are
@@ -6465,7 +6606,7 @@
   dependency only.
 ```
 
-#### **动作与副本**
+#### **Actions and copies**
 
 ```
   Action and copy targets that are listed as "data_deps" will have all of their
@@ -6500,7 +6641,7 @@
      for each.
 ```
 
-#### **静态库和源集**
+#### **Static libraries and source sets**
 
 ```
   The results of static_library or source_set targets are not considered
@@ -6511,7 +6652,7 @@
   itself).
 ```
 
-#### **多输出**
+#### **Multiple outputs**
 
 ```
   Linker tools can specify which of their outputs should be considered when
@@ -6519,7 +6660,7 @@
   the tool, the default will be the first output only.
 ```
 
-### <a name="source_expansion"></a>**如何扩展源代码**
+### <a name="source_expansion"></a>**How Source Expansion Works**
 
 ```
   Source expansion is used for the action_foreach and copy target types to map
@@ -6540,7 +6681,7 @@
   applied.
 ```
 
-#### **占位符**
+#### **Placeholders**
 
 ```
   This section discusses only placeholders for actions. There are other
@@ -6594,7 +6735,7 @@
         "//foo/bar/baz.txt" => "baz.txt"
 ```
 
-#### **(\*)目录上的注释**
+#### **(\*) Note on directories**
 
 ```
   Paths containing directories (except the source_root_relative_dir) will be
@@ -6610,7 +6751,7 @@
   results of those expansions will be handled by GN internally.
 ```
 
-#### **实例**
+#### **Examples**
 
 ```
   Non-varying outputs:
@@ -6634,9 +6775,9 @@
     //out/Debug/obj/mydirectory/input2.cc
 ```
 
-## <a name="switches"></a>命令行开关
+## <a name="switches"></a>Command Line Switches
 
-**可用全局开关**多做"GN帮助——Twitter".单独的命令可以使用这里没有列出的命令专用开关.更多的帮助查看你的具体命令.
+**Global Switchs**Ddo"Gn else - the form switch force you know you wanted to help force on"for more .Individual Commans may take command - specific switchs not listed here .See the help on your specific command for more .
 
 ```
     *   [--args: Specifies build arguments overrides.](#--args)
