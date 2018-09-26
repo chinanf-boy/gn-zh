@@ -5,7 +5,7 @@
 
 GN为你在单个构建中进行跨平台编译和构建多个体系结构的东西提供了强大的支持 ( 例如,构建一些在本地运行的东西,以及一些在嵌入式设备上运行的东西).实际上,您可以没有限制数量的同时构建不同体系结构;Chromium构建在某些配置中至少使用四个不同结构.
 
-首先,GN有一个*host*和一个*target*的概念.主机是运行构建的平台,目标是代码实际运行的平台(这与[autotools-自动工具](http://www.gnu.org/software/automake/manual/html_node/Cross_002dCompilation.html)'术语不同,但使用更常见的术语 - **跨平台编译「cross-compiling」*).
+首先,GN有一个*host*和一个*target*的概念.主机是运行构建的平台,目标是代码实际运行的平台(这与[autotools-自动工具](http://www.gnu.org/software/automake/manual/html_node/Cross_002dCompilation.html)'术语不同,但使用更常见的术语 - *跨平台编译「cross-compiling」*).
 
 (令人困惑的是,GN还指定构建时每个工件 - 可执行文件,库 等, 也可作为目标.在此页面上,我们将仅使用"target"来表明您要运行代码的系统,并且使用"rule"或其他同义词来代指特定的构建工件.
 
