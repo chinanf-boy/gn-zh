@@ -320,22 +320,22 @@ static_library("intermediate_library") {
 Templates 是 GN 复用代码的主要方式.通常,模板扩展为一个或多个其他目标类型.
 
 ```bash
-# Declares a script that compiles IDL files to source, and then compiles those
-# source files.
+# 声明一个脚本，将IDL文件编译为源，然后编译它们
+# 源文件.
 template("idl") {
-  # Always base helper targets on target_name so they're unique. Target name
-  # will be the string passed as the name when the template is invoked.
+  # 始终在target_name上创建辅助目标，因此它们是唯一的.
+  # target_name将是调用模板时,作为名称传递的字符串。
   idl_target_name = "${target_name}_generate"
   action_foreach(idl_target_name) {
     ...
   }
 
-  # Your template should always define a target with the name target_name.
-  # When other targets depend on your template invocation, this will be the
-  # destination of that dependency.
+  # 您的模板应始终定义名为target_name的目标。
+  # 当其他目标依赖于您的模板调用时，这将是
+  # 对应target_name依赖的目的地。
   source_set(target_name) {
     ...
-    deps = [ ":$idl_target_name" ]  # Require the sources to be compiled.
+    deps = [ ":$idl_target_name" ]  # 要求编译源代码。
   }
 }
 ```
@@ -350,7 +350,7 @@ idl("my_interfaces") {
 }
 ```
 
-声明模板在该范围内,创建围绕范围内的变量的闭包.当调用模板时,神奇变量`invoker`用于从调用定义中读取变量.模板通常会将其感兴趣的值复制到它自己的范围内:
+声明模板的创建带有变量的`{}`闭包. 当调用模板时,神奇变量`invoker`用于从调用定义中读取变量. 模板通常会将其感兴趣的值复制到它自己的范围内:
 
 ```
 template("idl") {
@@ -360,7 +360,7 @@ template("idl") {
 }
 ```
 
-模板执行时的当前目录,会是调用生成文件而不是模板源文件的当前目录.因此,从模板`invoker`传入的文件将是正确的(这通常说明模板中的大多数文件处理).但是,如果模板本身具有文件(可能它生成运行脚本的操作),则您需要使用绝对路径("//foo/...")来引用这些文件,以此规避当前目录在调用期间是不可预测性. 参见`gn help template`更多的信息和更完整的例子.
+模板执行时的当前目录,会是调用生成文件,而不是模板源文件的当前目录.因此,从模板`invoker`传入的文件将是正确的(这通常说明模板中的大多数文件处理).但是,如果模板本身具有文件(可能它生成运行脚本的操作),则您需要使用绝对路径("//foo/...")来引用这些文件,以此规避当前目录在调用期间是不可预测性. 参见`gn help template`更多的信息和更完整的例子.
 
 ## 其他特征
 
